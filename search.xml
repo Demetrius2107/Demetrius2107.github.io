@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2023/11/26/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>随感01</title>
+    <url>/2023/11/26/%E5%90%9B%E9%97%AE%E5%BD%92%E6%9C%9F%E6%9C%89%E6%9C%AA%E6%9C%89%E6%9C%9F%E5%85%B6%E4%B8%80/</url>
+    <content><![CDATA[<h1 id="君问归期未有期其一"><a href="#君问归期未有期其一" class="headerlink" title="君问归期未有期其一"></a>君问归期未有期其一</h1><p>  一直想尝试搭建一个个人博客，这个计划自大二上学期以来便一直徘徊着，总是因为各种各样无聊的事情耽误。中间几次拾起来，曾打算搭建一个SpringBoot自建博客，但是因为技术栈学习屡屡停止。</p>
+<p>​	计划进展被放弃没有人会在意也没有人会责怪，除了时间。时间长河一直在奔流，一瞬而过。转眼来到了大三，十一月下旬，随着技术和阅历的提升，发现博客搭建没有我想的那么困难复杂，也因为对语雀的稳定性的怀疑，博客又被我提到日程安排之上。</p>
+<p>​	今天下午，用了一下午去搭建博客，终于完成了这个曾经看来困难，其实在历代优秀开发者提供的框架下轻而易举的问题。</p>
+<h1 id="ELSE"><a href="#ELSE" class="headerlink" title="ELSE"></a>ELSE</h1><ul>
+<li><p>搭建的第一版博客还是过于简陋，不够美观，之后会继续优化</p>
+</li>
+<li><p>主要记录学习知识和心路 以及读书笔记（<del>中二青年不是</del>）</p>
+</li>
+<li><p>提高更新频率，争取一周三更，加强github的使用</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>随感</tag>
+      </tags>
+  </entry>
+</search>
