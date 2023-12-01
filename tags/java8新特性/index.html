@@ -84,7 +84,7 @@
 <meta name="description" content="君问归期未有期">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Demetrius2107">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="http://example.com/tags/java8%E6%96%B0%E7%89%B9%E6%80%A7/index.html">
 <meta property="og:site_name" content="Demetrius2107">
 <meta property="og:description" content="君问归期未有期">
 <meta property="og:locale" content="zh_CN">
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/"/>
+  <link rel="canonical" href="http://example.com/tags/java8新特性/"/>
 
 
 
 
 
-  <title>Demetrius2107</title>
+  <title>Tag: java8新特性 | Demetrius2107</title>
   
 
 
@@ -145,8 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -253,484 +252,53 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
-    
+
+  
+  
+  
+  <div class="post-block tag">
+
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>java8新特性<small>Tag</small>
+        </h1>
+      </div>
+
       
-
-  
-
-  
-  
-  
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/01/Stream%E6%B5%81/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Demetrius2107">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2023/12/01/Stream%E6%B5%81/" itemprop="url">Stream流</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
+            <a class="post-title-link" href="/2023/12/01/Stream%E6%B5%81/" itemprop="url">
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span itemprop="name">Stream流</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-12-01T19:40:08+08:00">
-                2023-12-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
+            </a>
         
-          
-            <h2 id="Before"><a href="#Before" class="headerlink" title="Before"></a>Before</h2><p>在单体项目和分布式数据库学习项目中曾使用过，但只是机械的照搬照抄，没有专门认真了解。</p>
-<p>本次查阅相关材料后，通过一点简单的代码，对于流有了基本的认识。函数式编程用着确实很爽，之后计划再看一一遍SCIP。</p>
-<hr>
-<h2 id="Warn"><a href="#Warn" class="headerlink" title="Warn"></a>Warn</h2><p>本篇文章仅是我初学Stream的认知复盘，没有完整成体系的知识讲解，且因为本人学识浅薄，可能会存在一定的疏漏，还望谅解。</p>
-<hr>
-<h2 id="Start"><a href="#Start" class="headerlink" title="Start"></a>Start</h2><h3 id="1-define"><a href="#1-define" class="headerlink" title="1.define"></a>1.define</h3><h4 id="什么是Stream流"><a href="#什么是Stream流" class="headerlink" title="什么是Stream流"></a>什么是Stream流</h4><p>Stream流是一个来自数据源（如集合、数组、IO通道）的元素序列，支持聚合操作，简化数据处理。高效且易于使用，善于处理大量数据。<strong>Stream流不是数据结构，是对数据的一种描述，不会存储数据，也不会修改数据源。</strong></p>
-<p>Stream使用一种类似SQL语句从数据库查询数据的直观方式来提供对Java运算集合和表达的告诫抽象。</p>
-<ul>
-<li>数据源 流的来源。可以是集合，数组，I&#x2F;O channel,产生器 generator</li>
-<li>聚合操作 类SQL。 filter，map,reduce,find,match,count,sorted,foreach</li>
-<li>元素是特定类型的对象，并形成一个队列。 Java中的Stream并不会存储元素，<strong>按需计算</strong>。</li>
-</ul>
-<h4 id="Stream流和传统集合的区别"><a href="#Stream流和传统集合的区别" class="headerlink" title="Stream流和传统集合的区别"></a>Stream流和传统集合的区别</h4><ul>
-<li>Stream流是一种数据流，不是数据结构，它不会存储数据。</li>
-<li>Stream流操作是延迟执行的，只有当需要结果时才会执行。</li>
-<li>Stream流可以进行并行处理，提高数据处理效率。</li>
-<li>Stream流提供了丰富的<strong>函数式编程方法</strong>，使得代码更简洁、易读</li>
-</ul>
-<h3 id="2-Create"><a href="#2-Create" class="headerlink" title="2.Create"></a>2.Create</h3><h4 id="从集合创建Stream流"><a href="#从集合创建Stream流" class="headerlink" title="从集合创建Stream流"></a>从集合创建Stream流</h4><p>集合类（如List和Set）可以通过调用stream()方法创建一个Stream流。例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;banana&quot;</span>, <span class="string">&quot;orange&quot;</span>);</span><br><span class="line">Stream&lt;String&gt; stream = list.stream();</span><br></pre></td></tr></table></figure>
+      </h2>
 
-<h4 id="从数组创建Stream流"><a href="#从数组创建Stream流" class="headerlink" title="从数组创建Stream流"></a>从数组创建Stream流</h4><p>可以使用Arrays.stream()方法从数组创建一个Stream流。例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String[] array = &#123;<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;banana&quot;</span>, <span class="string">&quot;orange&quot;</span>&#125;;</span><br><span class="line">Stream&lt;String&gt; stream = Arrays.stream(array);</span><br></pre></td></tr></table></figure>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2023-12-01T19:40:08+08:00"
+              content="2023-12-01" >
+          12-01
+        </time>
+      </div>
 
-<h4 id="从I-O通道创建Stream流"><a href="#从I-O通道创建Stream流" class="headerlink" title="从I&#x2F;O通道创建Stream流"></a>从I&#x2F;O通道创建Stream流</h4><p>可以使用Files.lines()方法从文件中创建一个Stream流，每个元素代表文件中的一行。例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Path</span> <span class="variable">path</span> <span class="operator">=</span> Paths.get(<span class="string">&quot;file.txt&quot;</span>);</span><br><span class="line"><span class="keyword">try</span> (Stream&lt;String&gt; stream = Files.lines(path)) &#123;</span><br><span class="line">    stream.forEach(System.out::println);</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </header>
+  </article>
 
-<h4 id="其他Stream流创建方法"><a href="#其他Stream流创建方法" class="headerlink" title="其他Stream流创建方法"></a>其他Stream流创建方法</h4><ul>
-<li>使用Stream.of()方法创建一个包含多个元素的Stream流：</li>
-</ul>
-<p>java Stream<String> stream &#x3D; Stream.of(“apple”, “banana”, “orange”);</p>
-<ul>
-<li>使用Stream.iterate()方法创建一个无限Stream流：</li>
-</ul>
-<p>java Stream<Integer> stream &#x3D; Stream.iterate(0, n -&gt; n + 2).limit(10);</p>
-<ul>
-<li>使用Stream.generate()方法创建一个无限Stream流：</li>
-</ul>
-<p>java Stream<Double> stream &#x3D; Stream.generate(Math::random).limit(5);</p>
-<p>注意：在使用无限Stream流时，通常需要使用limit()方法限制元素数量，以避免无限循环</p>
-<h3 id="3-Operation"><a href="#3-Operation" class="headerlink" title="3.Operation"></a>3.Operation</h3><p><img src="https://cdn.nlark.com/yuque/0/2023/png/28593325/1701429800116-5e199d64-e7f7-47be-b0bd-d0fb93c98202.png" alt="img"></p>
-<h4 id="生成流"><a href="#生成流" class="headerlink" title="生成流"></a>生成流</h4><p>在 Java 8 中, 集合接口有两个方法来生成流：</p>
-<ul>
-<li><strong>stream()</strong> − 为集合创建串行流。</li>
-<li><strong>parallelStream()</strong> − 为集合创建并行流。</li>
-</ul>
-<p>List<String> strings &#x3D; Arrays.asList(“abc”, “”, “bc”, “efg”, “abcd”,””, “jkl”); List<String> filtered &#x3D; strings.stream().filter(string -&gt; !string.isEmpty()).collect(Collectors.toList());</p>
-<hr>
-<h4 id="forEach-遍历"><a href="#forEach-遍历" class="headerlink" title="forEach 遍历"></a>forEach 遍历</h4><p>Stream 提供了新的方法 ‘forEach’ 来迭代流中的每个数据。以下代码片段使用 forEach 输出了10个随机数：</p>
-<p>Randomrandom &#x3D; newRandom(); random.ints().limit(10).forEach(System.out::println);</p>
-<hr>
-<h4 id="map-映射"><a href="#map-映射" class="headerlink" title="map 映射"></a>map 映射</h4><p><strong>映射</strong>：可以将一个流的元素按照一定的映射规则映射到另一个流中<br><strong>map</strong>：接收一个函数作为参数，该函数会被应用到每个元素上，并将其映射成一个新的元素。<br><strong>flatMap</strong>：接收一个函数作为参数，将流中的每个值都换成另一个流，然后把所有流连接成一个流。</p>
-<p>map 方法用于映射每个元素到对应的结果，以下代码片段使用 map 输出了元素对应的平方数：</p>
-<p>List<Integer> numbers &#x3D; Arrays.asList(3, 2, 2, 3, 7, 3, 5); &#x2F;&#x2F; 获取对应的平方数List<Integer> squaresList &#x3D; numbers.stream().map(i -&gt; i*i).distinct().collect(Collectors.toList());</p>
-<hr>
-<h4 id="filter-过滤"><a href="#filter-过滤" class="headerlink" title="filter 过滤"></a>filter 过滤</h4><p>filter 方法用于通过设置的条件过滤出元素。以下代码片段使用 filter 方法过滤出空字符串：</p>
-<p>List<String>strings &#x3D; Arrays.asList(“abc”, “”, “bc”, “efg”, “abcd”,””, “jkl”); &#x2F;&#x2F; 获取空字符串的数量longcount &#x3D; strings.stream().filter(string -&gt; string.isEmpty()).count();</p>
-<hr>
-<h4 id="limit-限制"><a href="#limit-限制" class="headerlink" title="limit 限制"></a>limit 限制</h4><ol>
-<li>concat：合并留。</li>
-<li>distinct：去重，去重的判断方法是对象自带equal。</li>
-<li>limit：限制从流中获得前n个数据。</li>
-<li>skip：跳过。</li>
-</ol>
-<p>limit 方法用于获取指定数量的流。 以下代码片段使用 limit 方法打印出 10 条数据：</p>
-<p>Randomrandom &#x3D; newRandom(); random.ints().limit(10).forEach(System.out::println);</p>
-<hr>
-<h4 id="sorted-排序"><a href="#sorted-排序" class="headerlink" title="sorted 排序"></a>sorted 排序</h4><p>sorted，中间操作。有两种排序：</p>
-<ol>
-<li>sorted()：自然排序，流中元素需实现Comparable接口</li>
-<li>sorted(Comparator com)：Comparator排序器自定义排序</li>
-</ol>
-<p>sorted 方法用于对流进行排序。以下代码片段使用 sorted 方法对输出的 10 个随机数进行排序：</p>
-<p>Randomrandom &#x3D; newRandom(); random.ints().limit(10).sorted().forEach(System.out::println);</p>
-<hr>
-<h4 id="并行（parallel）程序"><a href="#并行（parallel）程序" class="headerlink" title="并行（parallel）程序"></a>并行（parallel）程序</h4><p>parallelStream 是流并行处理程序的代替方法。以下实例我们使用 parallelStream 来输出空字符串的数量：</p>
-<p>List<String> strings &#x3D; Arrays.asList(“abc”, “”, “bc”, “efg”, “abcd”,””, “jkl”); &#x2F;&#x2F; 获取空字符串的数量longcount &#x3D; strings.parallelStream().filter(string -&gt; string.isEmpty()).count();</p>
-<p>我们可以很容易的在顺序运行和并行之间切换。</p>
-<hr>
-<h4 id="Collectors-收集"><a href="#Collectors-收集" class="headerlink" title="Collectors 收集"></a>Collectors 收集</h4><p>Collectors 类实现了很多归约操作，例如将流转换成集合和聚合元素。Collectors 可用于返回列表或字符串：</p>
-<p>收集（collect），可以说是内容最繁多、功能最丰富的部分、在开发过程中最常用的。从字面上去理解，就是把一个流收集起来，最终将流转换成新的集合List<?>、Map<?, ?>、Set&lt;?&gt;。</p>
-<p>List<String>strings &#x3D; Arrays.asList(“abc”, “”, “bc”, “efg”, “abcd”,””, “jkl”); List<String> filtered &#x3D; strings.stream().filter(string -&gt; !string.isEmpty()).collect(Collectors.toList()); System.out.println(“筛选列表: “ + filtered); StringmergedString &#x3D; strings.stream().filter(string -&gt; !string.isEmpty()).collect(Collectors.joining(“, “)); System.out.println(“合并字符串: “ + mergedString);</p>
-<hr>
-<p>“以上只是列举了一些常见的操作，还有更多的细分操作没有列出，在以后的持续学习中会进一步了解”</p>
-<h4 id="reduce-归约"><a href="#reduce-归约" class="headerlink" title="reduce 归约"></a>reduce 归约</h4><p>归约，也称缩减，顾名思义，是把一个流缩减成一个值，能实现对集合求和、求乘积和求最值操作。</p>
-<h2 id="Improve"><a href="#Improve" class="headerlink" title="Improve"></a>Improve</h2><p>程序运行中，流Stream只能使用一次，使用后会默认关闭，不能重复使用；重复使用会报错，</p>
-<p>在开发过程中，建议使用Stream.of(list)，解决list为null的问题；使用list.stream()之前需要判断list是否为null，避免报错<strong>空指针异常</strong>(java.lang.NullPointerException)。</p>
-<p>更多使用中出现的问题我会进一步学习并进行理解，本篇仅为我个人对于Stream的初步认识。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java8-streams.html">https://www.runoob.com/java/java8-streams.html</a> 菜鸟教程</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_60489526/article/details/119984236">https://blog.csdn.net/m0_60489526/article/details/119984236</a> CSDN</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/439176814">https://zhuanlan.zhihu.com/p/439176814</a>   知乎</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_27242695/article/details/109668771">https://blog.csdn.net/qq_27242695/article/details/109668771</a> CSDN</li>
-</ol>
 
-          
-        
       
     </div>
-    
-    
-    
 
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
   
   
   
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/26/%E5%90%9B%E9%97%AE%E5%BD%92%E6%9C%9F%E6%9C%89%E6%9C%AA%E6%9C%89%E6%9C%9F%E5%85%B6%E4%B8%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Demetrius2107">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2023/11/26/%E5%90%9B%E9%97%AE%E5%BD%92%E6%9C%9F%E6%9C%89%E6%9C%AA%E6%9C%89%E6%9C%9F%E5%85%B6%E4%B8%80/" itemprop="url">随感01</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-11-26T18:39:12+08:00">
-                2023-11-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="君问归期未有期其一"><a href="#君问归期未有期其一" class="headerlink" title="君问归期未有期其一"></a>君问归期未有期其一</h1><p>  一直想尝试搭建一个个人博客，这个计划自大二上学期以来便一直徘徊着，总是因为各种各样无聊的事情耽误。中间几次拾起来，曾打算搭建一个SpringBoot自建博客，但是因为技术栈学习屡屡停止。</p>
-<p>​	计划进展被放弃没有人会在意也没有人会责怪，除了时间。时间长河一直在奔流，一瞬而过。转眼来到了大三，十一月下旬，随着技术和阅历的提升，发现博客搭建没有我想的那么困难复杂，也因为对语雀的稳定性的怀疑，博客又被我提到日程安排之上。</p>
-<p>​	今天下午，用了一下午去搭建博客，终于完成了这个曾经看来困难，其实在历代优秀开发者提供的框架下轻而易举的问题。</p>
-<h1 id="ELSE"><a href="#ELSE" class="headerlink" title="ELSE"></a>ELSE</h1><ul>
-<li><p>搭建的第一版博客还是过于简陋，不够美观，之后会继续优化</p>
-</li>
-<li><p>主要记录学习知识和心路 以及读书笔记（<del>中二青年不是</del>）</p>
-</li>
-<li><p>提高更新频率，争取一周三更，加强github的使用</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/26/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Demetrius2107">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2023/11/26/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-11-26T18:08:24+08:00">
-                2023-11-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
 
   
 

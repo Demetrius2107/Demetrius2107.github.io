@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-11-26T11:42:20.844Z</updated>
+  <updated>2023-12-01T11:43:47.901Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Stream流</title>
+    <link href="http://example.com/2023/12/01/Stream%E6%B5%81/"/>
+    <id>http://example.com/2023/12/01/Stream%E6%B5%81/</id>
+    <published>2023-12-01T11:40:08.000Z</published>
+    <updated>2023-12-01T11:43:47.901Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;Before&quot;&gt;&lt;a href=&quot;#Before&quot; class=&quot;headerlink&quot; title=&quot;Before&quot;&gt;&lt;/a&gt;Before&lt;/h2&gt;&lt;p&gt;在单体项目和分布式数据库学习项目中曾使用过，但只是机械的照搬照抄，没有专门认真了解。&lt;/p&gt;
+&lt;p&gt;本次查阅</summary>
+      
+    
+    
+    
+    
+    <category term="java8新特性" scheme="http://example.com/tags/java8%E6%96%B0%E7%89%B9%E6%80%A7/"/>
+    
+  </entry>
   
   <entry>
     <title>随感01</title>
