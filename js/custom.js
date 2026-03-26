@@ -91,3 +91,18 @@ function addTimeTags() {
     }
   });
 }
+
+// 3. 文章目录展开/收起功能
+function togglePosts() {
+  var postsContainer = $('#posts-container');
+  var toggleBtn = $('.toggle-btn');
+  var icon = toggleBtn.find('i');
+  
+  if (postsContainer.is(':visible')) {
+    postsContainer.slideUp();
+    icon.removeClass('fa-chevron-up').addClass('fa-chevron-down');
+  } else {
+    postsContainer.slideDown();
+    icon.removeClass('fa-chevron-down').addClass('fa-chevron-up');
+  }
+}
