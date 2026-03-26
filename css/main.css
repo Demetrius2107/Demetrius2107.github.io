@@ -2144,6 +2144,9 @@ body {
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   border: 1px solid #334155;
+  max-width: 700px; /* 限制最大宽度 */
+  margin-left: auto; /* 居中显示 */
+  margin-right: auto; /* 居中显示 */
 }
 
 .hero-content h1 {
