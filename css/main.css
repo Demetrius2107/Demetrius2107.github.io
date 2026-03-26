@@ -2123,9 +2123,10 @@ body {
 /* 主内容 */
 .main-inner {
   background: rgba(15, 23, 42, 0.8);
-  border-color: #334155;
+  border: 1px solid #334155;
+  border-radius: 16px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  max-width: 800px; /* 限制最大宽度 */
+  max-width: 700px; /* 进一步限制宽度 */
   margin: 0 auto; /* 居中显示 */
   padding: 60px; /* 增加内边距 */
 }
@@ -2137,35 +2138,40 @@ body {
 /* 横幅部分 */
 .hero-section {
   background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-  padding: 100px 0;
+  padding: 80px 40px; /* 调整内边距 */
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid #334155;
 }
 
 .hero-content h1 {
-  font-size: 36px; /* 调整字体大小 */
+  font-size: 32px; /* 调整字体大小 */
   color: #fff;
   margin-bottom: 16px;
   font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .hero-content p {
-  font-size: 18px; /* 调整字体大小 */
+  font-size: 16px; /* 调整字体大小 */
   color: #94a3b8;
   margin-bottom: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* 文章目录部分 */
 .posts-directory {
-  margin-bottom: 50px;
+  margin-bottom: 60px;
 }
 
 .section-title {
-  font-size: 24px; /* 调整字体大小 */
+  font-size: 22px; /* 调整字体大小 */
   color: #e2e8f0;
-  margin-bottom: 24px;
+  margin-bottom: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2195,8 +2201,8 @@ body {
   background: rgba(30, 41, 59, 0.8);
   border: 1px solid #334155;
   border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 24px;
+  padding: 30px;
+  margin-bottom: 30px;
   transition: all 0.3s ease;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 }
@@ -2211,7 +2217,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .post-title {
@@ -2220,6 +2226,7 @@ body {
   margin: 0;
   flex: 1;
   margin-right: 16px;
+  line-height: 1.4;
 }
 
 .post-title a {
@@ -2243,20 +2250,24 @@ body {
 }
 
 .post-excerpt {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   color: #94a3b8;
   line-height: 1.6;
   font-size: 14px;
+  padding-left: 0;
 }
 
 .post-excerpt p {
   margin-bottom: 0;
+  line-height: 1.7;
 }
 
 .post-meta {
   display: flex;
   align-items: center;
   font-size: 14px;
+  padding-top: 16px;
+  border-top: 1px solid #334155;
 }
 
 .post-tags {
@@ -2291,8 +2302,9 @@ body {
   background: rgba(30, 41, 59, 0.8);
   border: 1px solid #334155;
   border-radius: 12px;
-  padding: 32px;
+  padding: 36px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 60px;
 }
 
 .about-content {
@@ -2302,7 +2314,8 @@ body {
 }
 
 .about-content p {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  line-height: 1.8;
 }
 
 /* 页脚 */
