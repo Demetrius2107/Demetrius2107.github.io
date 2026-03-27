@@ -1,0 +1,27 @@
+# Decap CMS 核心配置
+backend:
+  name: github               # 后端使用 GitHub
+  repo: Demetrius2107/Demetrius2107.github.io  # 你的仓库地址（用户名/仓库名）
+  branch: main               # 部署分支（通常是 main 或 master）
+  base_url: https://demetrius2107.github.io  # 你的站点域名
+  auth_endpoint: oauth       # 固定 OAuth 认证路径
+  client_id: Ov23liy9nCsQsoZbc40X  # 替换为步骤 1 生成的 Client ID
+
+# 媒体文件（图片/附件）配置
+media_folder: "my-blog/static/images"  # 图片上传后存放的本地路径
+public_folder: "/images"               # 网站上访问图片的路径（对应 static/images → /images）
+
+# 文档集合配置（管理你的文章/文档）
+collections:
+  - name: "posts"            # 内部标识名
+    label: "我的文档"        # 后台显示的名称
+    folder: "my-blog/content/posts"  # 文档实际存放的目录（对应 Hugo 的 content/posts）
+    create: true             # 允许新建文档
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"  # 文件名生成规则（日期+标题）
+    fields:                  # 文档字段（对应 Hugo 的 Front Matter + 内容）
+      - { label: "标题", name: "title", widget: "string", required: true }
+      - { label: "发布日期", name: "date", widget: "datetime", required: true }
+      - { label: "标签", name: "tags", widget: "list", required: false }
+      - { label: "分类", name: "categories", widget: "list", required: false }
+      - { label: "摘要", name: "description", widget: "text", required: false }
+      - { label: "文档内容", name: "body", widget: "markdown", required: true }
