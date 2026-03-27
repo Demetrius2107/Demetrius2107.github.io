@@ -27,15 +27,22 @@ jobs:
         with:
           hugo-version: 'latest'
           extended: true
+
+      # ✅ 修复1：进入 my-blog 文件夹再构建
       - name: Build
-        run: hugo --minify
-        working-directory: ./my-blog
+        run: |
+          cd my-blog
+          hugo --minify
+
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
+      
+      # ✅ 修复2：上传 my-blog/public 里的真实构建产物
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./my-blog/public
+
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v4
