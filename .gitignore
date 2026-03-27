@@ -1,0 +1,8 @@
+# 1. 添加忽略文件
+git add .gitignore
+
+# 2. 提交
+git commit -m "添加git忽略文件，忽略backup和hugo.exe"
+
+# 3. 推送到远程
+git push
