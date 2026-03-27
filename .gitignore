@@ -1,0 +1,25 @@
+# Hugo generated files
+public/
+
+# Hugo executable
+hugo.exe
+
+# Build files
+.hugo_build.lock
+
+# Dependency directories
+node_modules/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Backup directories
+backup-old-blog/
