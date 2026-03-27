@@ -1,8 +1,1 @@
-<urlset
-    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-    xmlns:xhtml="http://www.w3.org/1999/xhtml"
-    ><url>
-            <loc>http://localhost:1313/categories/</loc></url><url>
-            <loc>http://localhost:1313/</loc></url><url>
-            <loc>http://localhost:1313/posts/</loc></url><url>
-            <loc>http://localhost:1313/tags/</loc></url></urlset>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml"><url><loc>https://demetrius2107.github.io/posts/first_post/</loc><lastmod>2026-03-27T13:38:32+08:00</lastmod></url><url><loc>https://demetrius2107.github.io/</loc><lastmod>2026-03-27T13:38:32+08:00</lastmod></url><url><loc>https://demetrius2107.github.io/posts/</loc><lastmod>2026-03-27T13:38:32+08:00</lastmod></url><url><loc>https://demetrius2107.github.io/categories/</loc></url><url><loc>https://demetrius2107.github.io/tags/</loc></url></urlset>
