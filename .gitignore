@@ -1,8 +1,27 @@
-# 1. 添加忽略文件
-git add .gitignore
+# Hugo生成的文件
+public/
+.hugo_build.lock
 
-# 2. 提交
-git commit -m "添加git忽略文件，忽略backup和hugo.exe"
+# 备份目录
+backup/
 
-# 3. 推送到远程
-git push
+# 可执行文件
+hugo.exe
+
+# 依赖目录
+node_modules/
+
+# IDE文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.tmp
+*.temp
