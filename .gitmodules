@@ -1,3 +1,6 @@
 [submodule "my-blog/themes/LoveIt"]
 	path = my-blog/themes/LoveIt
 	url = https://github.com/dillonzq/LoveIt.git
+[submodule "my-blog/themes/FixIt"]
+	path = my-blog/themes/FixIt
+	url = https://github.com/hugo-fixit/FixIt.git

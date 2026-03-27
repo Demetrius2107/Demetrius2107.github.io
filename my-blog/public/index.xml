@@ -1,1 +1,13 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>My New Hugo Project</title><link>https://demetrius2107.github.io/</link><description>This is my cool site</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 27 Mar 2026 13:38:32 +0800</lastBuildDate><atom:link href="https://demetrius2107.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>First_post</title><link>https://demetrius2107.github.io/posts/first_post/</link><pubDate>Fri, 27 Mar 2026 13:38:32 +0800</pubDate><author>xxxx</author><guid>https://demetrius2107.github.io/posts/first_post/</guid><description></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Demetrius&#39; Blog</title>
+    <link>http://localhost:1313/</link>
+    <description>Personal blog of Demetrius</description>
+    <generator>Hugo 0.159.1 &amp; FixIt v0.4.5</generator>
+    <language>en-us</language>
+    <copyright>Copyright © 2025 Demetrius</copyright>
+    <lastBuildDate></lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

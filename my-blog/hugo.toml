@@ -1,4 +1,69 @@
-baseURL = 'https://demetrius2107.github.io/'
-locale = 'en-us'
-title = 'My New Hugo Project'
-theme = "LoveIt" 
+# ====================== 基础站点配置（必改） ======================
+baseURL = "https://demetrius2107.netlify.app/"  # 你的Netlify域名
+languageCode = "en-us"
+locale = "en-us"
+title = "Demetrius' Blog"                    # 🔥 修复：双引号+无转义
+theme = "FixIt"                              # 启用FixIt主题
+author = "Demetrius"
+copyright = "Copyright © 2025 Demetrius"
+enableRobotsTXT = true
+
+# ====================== FixIt 主题核心配置 ======================
+[params]
+  subtitle = "Stay hungry, stay foolish"
+  description = "Personal blog of Demetrius"
+  logo = ""
+  favicon = "/favicon.ico"
+
+  defaultTheme = "auto"
+  enableDarkMode = true
+  enableThemeChange = true
+
+  enableSearch = true
+  enableCodeCopy = true
+  enableToc = true
+  enableLazyLoad = true
+  enableScrollToTop = true
+
+  contentOverflow = true
+  summaryLength = 150
+  paginate = 10
+
+# ====================== 顶部导航菜单 ======================
+[menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "Home"
+    url = "/"
+    weight = 1
+
+  [[menu.main]]
+    identifier = "archives"
+    name = "Archives"
+    url = "/archives/"
+    weight = 2
+
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 3
+
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 4
+
+# ====================== 社交链接 ======================
+[params.social]
+  GitHub = "Demetrius2107"
+  Email = "your-email@example.com"
+
+# ====================== 代码高亮配置 ======================
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = true
+    lineNumbersInTable = true
