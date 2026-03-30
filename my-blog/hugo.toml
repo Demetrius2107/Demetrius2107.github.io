@@ -12,7 +12,7 @@ enableRobotsTXT = true
 [params]
   subtitle = "Stay hungry, stay foolish"
   description = "Personal blog of Demetrius"
-  logo = ""
+  logo = "/images/logo.png"
   favicon = "/favicon.ico"
 
   defaultTheme = "auto"
