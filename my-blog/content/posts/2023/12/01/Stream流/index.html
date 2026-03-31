@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java8新特性," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Demetrius2107" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Before在单体项目和分布式数据库学习项目中曾使用过，但只是机械的照搬照抄，没有专门认真了解。 本次查阅相关材料后，通过一点简单的代码，对于流有了基本的认识。函数式编程用着确实很爽，之后计划再看一一遍SCIP。  Warn本篇文章仅是我初学Stream的认知复盘，没有完整成体系的知识讲解，且因为本人学识浅薄，可能会存在一定的疏漏，还望谅解。  Start1.define什么是Stream流Str">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stream流">
+<meta property="og:url" content="http://example.com/2023/12/01/Stream%E6%B5%81/index.html">
+<meta property="og:site_name" content="Demetrius2107">
+<meta property="og:description" content="Before在单体项目和分布式数据库学习项目中曾使用过，但只是机械的照搬照抄，没有专门认真了解。 本次查阅相关材料后，通过一点简单的代码，对于流有了基本的认识。函数式编程用着确实很爽，之后计划再看一一遍SCIP。  Warn本篇文章仅是我初学Stream的认知复盘，没有完整成体系的知识讲解，且因为本人学识浅薄，可能会存在一定的疏漏，还望谅解。  Start1.define什么是Stream流Str">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/28593325/1701429800116-5e199d64-e7f7-47be-b0bd-d0fb93c98202.png">
+<meta property="article:published_time" content="2023-12-01T11:40:08.000Z">
+<meta property="article:modified_time" content="2023-12-01T11:43:47.901Z">
+<meta property="article:author" content="Demetrius2107">
+<meta property="article:tag" content="java8新特性">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2023/png/28593325/1701429800116-5e199d64-e7f7-47be-b0bd-d0fb93c98202.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2023/12/01/Stream流/"/>
+
+
+
+
+
+  <title>Stream流 | Demetrius2107</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Demetrius2107</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">我见青山多妩媚，料青山见我应如是</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/12/01/Stream%E6%B5%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Demetrius2107">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Stream流</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-12-01T19:40:08+08:00">
+                2023-12-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Before"><a href="#Before" class="headerlink" title="Before"></a>Before</h2><p>在单体项目和分布式数据库学习项目中曾使用过，但只是机械的照搬照抄，没有专门认真了解。</p>
+<p>本次查阅相关材料后，通过一点简单的代码，对于流有了基本的认识。函数式编程用着确实很爽，之后计划再看一一遍SCIP。</p>
+<hr>
+<h2 id="Warn"><a href="#Warn" class="headerlink" title="Warn"></a>Warn</h2><p>本篇文章仅是我初学Stream的认知复盘，没有完整成体系的知识讲解，且因为本人学识浅薄，可能会存在一定的疏漏，还望谅解。</p>
+<hr>
+<h2 id="Start"><a href="#Start" class="headerlink" title="Start"></a>Start</h2><h3 id="1-define"><a href="#1-define" class="headerlink" title="1.define"></a>1.define</h3><h4 id="什么是Stream流"><a href="#什么是Stream流" class="headerlink" title="什么是Stream流"></a>什么是Stream流</h4><p>Stream流是一个来自数据源（如集合、数组、IO通道）的元素序列，支持聚合操作，简化数据处理。高效且易于使用，善于处理大量数据。<strong>Stream流不是数据结构，是对数据的一种描述，不会存储数据，也不会修改数据源。</strong></p>
+<p>Stream使用一种类似SQL语句从数据库查询数据的直观方式来提供对Java运算集合和表达的告诫抽象。</p>
+<ul>
+<li>数据源 流的来源。可以是集合，数组，I&#x2F;O channel,产生器 generator</li>
+<li>聚合操作 类SQL。 filter，map,reduce,find,match,count,sorted,foreach</li>
+<li>元素是特定类型的对象，并形成一个队列。 Java中的Stream并不会存储元素，<strong>按需计算</strong>。</li>
+</ul>
+<h4 id="Stream流和传统集合的区别"><a href="#Stream流和传统集合的区别" class="headerlink" title="Stream流和传统集合的区别"></a>Stream流和传统集合的区别</h4><ul>
+<li>Stream流是一种数据流，不是数据结构，它不会存储数据。</li>
+<li>Stream流操作是延迟执行的，只有当需要结果时才会执行。</li>
+<li>Stream流可以进行并行处理，提高数据处理效率。</li>
+<li>Stream流提供了丰富的<strong>函数式编程方法</strong>，使得代码更简洁、易读</li>
+</ul>
+<h3 id="2-Create"><a href="#2-Create" class="headerlink" title="2.Create"></a>2.Create</h3><h4 id="从集合创建Stream流"><a href="#从集合创建Stream流" class="headerlink" title="从集合创建Stream流"></a>从集合创建Stream流</h4><p>集合类（如List和Set）可以通过调用stream()方法创建一个Stream流。例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;banana&quot;</span>, <span class="string">&quot;orange&quot;</span>);</span><br><span class="line">Stream&lt;String&gt; stream = list.stream();</span><br></pre></td></tr></table></figure>
+
+<h4 id="从数组创建Stream流"><a href="#从数组创建Stream流" class="headerlink" title="从数组创建Stream流"></a>从数组创建Stream流</h4><p>可以使用Arrays.stream()方法从数组创建一个Stream流。例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String[] array = &#123;<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;banana&quot;</span>, <span class="string">&quot;orange&quot;</span>&#125;;</span><br><span class="line">Stream&lt;String&gt; stream = Arrays.stream(array);</span><br></pre></td></tr></table></figure>
+
+<h4 id="从I-O通道创建Stream流"><a href="#从I-O通道创建Stream流" class="headerlink" title="从I&#x2F;O通道创建Stream流"></a>从I&#x2F;O通道创建Stream流</h4><p>可以使用Files.lines()方法从文件中创建一个Stream流，每个元素代表文件中的一行。例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Path</span> <span class="variable">path</span> <span class="operator">=</span> Paths.get(<span class="string">&quot;file.txt&quot;</span>);</span><br><span class="line"><span class="keyword">try</span> (Stream&lt;String&gt; stream = Files.lines(path)) &#123;</span><br><span class="line">    stream.forEach(System.out::println);</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="其他Stream流创建方法"><a href="#其他Stream流创建方法" class="headerlink" title="其他Stream流创建方法"></a>其他Stream流创建方法</h4><ul>
+<li>使用Stream.of()方法创建一个包含多个元素的Stream流：</li>
+</ul>
+<p>java Stream<String> stream &#x3D; Stream.of(“apple”, “banana”, “orange”);</p>
+<ul>
+<li>使用Stream.iterate()方法创建一个无限Stream流：</li>
+</ul>
+<p>java Stream<Integer> stream &#x3D; Stream.iterate(0, n -&gt; n + 2).limit(10);</p>
+<ul>
+<li>使用Stream.generate()方法创建一个无限Stream流：</li>
+</ul>
+<p>java Stream<Double> stream &#x3D; Stream.generate(Math::random).limit(5);</p>
+<p>注意：在使用无限Stream流时，通常需要使用limit()方法限制元素数量，以避免无限循环</p>
+<h3 id="3-Operation"><a href="#3-Operation" class="headerlink" title="3.Operation"></a>3.Operation</h3><p><img src="https://cdn.nlark.com/yuque/0/2023/png/28593325/1701429800116-5e199d64-e7f7-47be-b0bd-d0fb93c98202.png" alt="img"></p>
+<h4 id="生成流"><a href="#生成流" class="headerlink" title="生成流"></a>生成流</h4><p>在 Java 8 中, 集合接口有两个方法来生成流：</p>
+<ul>
+<li><strong>stream()</strong> − 为集合创建串行流。</li>
+<li><strong>parallelStream()</strong> − 为集合创建并行流。</li>
+</ul>
+<p>List<String> strings &#x3D; Arrays.asList(“abc”, “”, “bc”, “efg”, “abcd”,””, “jkl”); List<String> filtered &#x3D; strings.stream().filter(string -&gt; !string.isEmpty()).collect(Collectors.toList());</p>
+<hr>
+<h4 id="forEach-遍历"><a href="#forEach-遍历" class="headerlink" title="forEach 遍历"></a>forEach 遍历</h4><p>Stream 提供了新的方法 ‘forEach’ 来迭代流中的每个数据。以下代码片段使用 forEach 输出了10个随机数：</p>
+<p>Randomrandom &#x3D; newRandom(); random.ints().limit(10).forEach(System.out::println);</p>
+<hr>
+<h4 id="map-映射"><a href="#map-映射" class="headerlink" title="map 映射"></a>map 映射</h4><p><strong>映射</strong>：可以将一个流的元素按照一定的映射规则映射到另一个流中<br><strong>map</strong>：接收一个函数作为参数，该函数会被应用到每个元素上，并将其映射成一个新的元素。<br><strong>flatMap</strong>：接收一个函数作为参数，将流中的每个值都换成另一个流，然后把所有流连接成一个流。</p>
+<p>map 方法用于映射每个元素到对应的结果，以下代码片段使用 map 输出了元素对应的平方数：</p>
+<p>List<Integer> numbers &#x3D; Arrays.asList(3, 2, 2, 3, 7, 3, 5); &#x2F;&#x2F; 获取对应的平方数List<Integer> squaresList &#x3D; numbers.stream().map(i -&gt; i*i).distinct().collect(Collectors.toList());</p>
+<hr>
+<h4 id="filter-过滤"><a href="#filter-过滤" class="headerlink" title="filter 过滤"></a>filter 过滤</h4><p>filter 方法用于通过设置的条件过滤出元素。以下代码片段使用 filter 方法过滤出空字符串：</p>
+<p>List<String>strings &#x3D; Arrays.asList(“abc”, “”, “bc”, “efg”, “abcd”,””, “jkl”); &#x2F;&#x2F; 获取空字符串的数量longcount &#x3D; strings.stream().filter(string -&gt; string.isEmpty()).count();</p>
+<hr>
+<h4 id="limit-限制"><a href="#limit-限制" class="headerlink" title="limit 限制"></a>limit 限制</h4><ol>
+<li>concat：合并留。</li>
+<li>distinct：去重，去重的判断方法是对象自带equal。</li>
+<li>limit：限制从流中获得前n个数据。</li>
+<li>skip：跳过。</li>
+</ol>
+<p>limit 方法用于获取指定数量的流。 以下代码片段使用 limit 方法打印出 10 条数据：</p>
+<p>Randomrandom &#x3D; newRandom(); random.ints().limit(10).forEach(System.out::println);</p>
+<hr>
+<h4 id="sorted-排序"><a href="#sorted-排序" class="headerlink" title="sorted 排序"></a>sorted 排序</h4><p>sorted，中间操作。有两种排序：</p>
+<ol>
+<li>sorted()：自然排序，流中元素需实现Comparable接口</li>
+<li>sorted(Comparator com)：Comparator排序器自定义排序</li>
+</ol>
+<p>sorted 方法用于对流进行排序。以下代码片段使用 sorted 方法对输出的 10 个随机数进行排序：</p>
+<p>Randomrandom &#x3D; newRandom(); random.ints().limit(10).sorted().forEach(System.out::println);</p>
+<hr>
+<h4 id="并行（parallel）程序"><a href="#并行（parallel）程序" class="headerlink" title="并行（parallel）程序"></a>并行（parallel）程序</h4><p>parallelStream 是流并行处理程序的代替方法。以下实例我们使用 parallelStream 来输出空字符串的数量：</p>
+<p>List<String> strings &#x3D; Arrays.asList(“abc”, “”, “bc”, “efg”, “abcd”,””, “jkl”); &#x2F;&#x2F; 获取空字符串的数量longcount &#x3D; strings.parallelStream().filter(string -&gt; string.isEmpty()).count();</p>
+<p>我们可以很容易的在顺序运行和并行之间切换。</p>
+<hr>
+<h4 id="Collectors-收集"><a href="#Collectors-收集" class="headerlink" title="Collectors 收集"></a>Collectors 收集</h4><p>Collectors 类实现了很多归约操作，例如将流转换成集合和聚合元素。Collectors 可用于返回列表或字符串：</p>
+<p>收集（collect），可以说是内容最繁多、功能最丰富的部分、在开发过程中最常用的。从字面上去理解，就是把一个流收集起来，最终将流转换成新的集合List<?>、Map<?, ?>、Set&lt;?&gt;。</p>
+<p>List<String>strings &#x3D; Arrays.asList(“abc”, “”, “bc”, “efg”, “abcd”,””, “jkl”); List<String> filtered &#x3D; strings.stream().filter(string -&gt; !string.isEmpty()).collect(Collectors.toList()); System.out.println(“筛选列表: “ + filtered); StringmergedString &#x3D; strings.stream().filter(string -&gt; !string.isEmpty()).collect(Collectors.joining(“, “)); System.out.println(“合并字符串: “ + mergedString);</p>
+<hr>
+<p>“以上只是列举了一些常见的操作，还有更多的细分操作没有列出，在以后的持续学习中会进一步了解”</p>
+<h4 id="reduce-归约"><a href="#reduce-归约" class="headerlink" title="reduce 归约"></a>reduce 归约</h4><p>归约，也称缩减，顾名思义，是把一个流缩减成一个值，能实现对集合求和、求乘积和求最值操作。</p>
+<h2 id="Improve"><a href="#Improve" class="headerlink" title="Improve"></a>Improve</h2><p>程序运行中，流Stream只能使用一次，使用后会默认关闭，不能重复使用；重复使用会报错，</p>
+<p>在开发过程中，建议使用Stream.of(list)，解决list为null的问题；使用list.stream()之前需要判断list是否为null，避免报错<strong>空指针异常</strong>(java.lang.NullPointerException)。</p>
+<p>更多使用中出现的问题我会进一步学习并进行理解，本篇仅为我个人对于Stream的初步认识。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java8-streams.html">https://www.runoob.com/java/java8-streams.html</a> 菜鸟教程</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_60489526/article/details/119984236">https://blog.csdn.net/m0_60489526/article/details/119984236</a> CSDN</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/439176814">https://zhuanlan.zhihu.com/p/439176814</a>   知乎</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_27242695/article/details/109668771">https://blog.csdn.net/qq_27242695/article/details/109668771</a> CSDN</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java8%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag"># java8新特性</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/11/26/%E5%90%9B%E9%97%AE%E5%BD%92%E6%9C%9F%E6%9C%89%E6%9C%AA%E6%9C%89%E6%9C%9F%E5%85%B6%E4%B8%80/" rel="next" title="随感01">
+                <i class="fa fa-chevron-left"></i> 随感01
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+             
+             
+                <a href="/archives">
+           
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Before"><span class="nav-number">1.</span> <span class="nav-text">Before</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Warn"><span class="nav-number">2.</span> <span class="nav-text">Warn</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Start"><span class="nav-number">3.</span> <span class="nav-text">Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-define"><span class="nav-number">3.1.</span> <span class="nav-text">1.define</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFStream%E6%B5%81"><span class="nav-number">3.1.1.</span> <span class="nav-text">什么是Stream流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Stream%E6%B5%81%E5%92%8C%E4%BC%A0%E7%BB%9F%E9%9B%86%E5%90%88%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.1.2.</span> <span class="nav-text">Stream流和传统集合的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Create"><span class="nav-number">3.2.</span> <span class="nav-text">2.Create</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8E%E9%9B%86%E5%90%88%E5%88%9B%E5%BB%BAStream%E6%B5%81"><span class="nav-number">3.2.1.</span> <span class="nav-text">从集合创建Stream流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8E%E6%95%B0%E7%BB%84%E5%88%9B%E5%BB%BAStream%E6%B5%81"><span class="nav-number">3.2.2.</span> <span class="nav-text">从数组创建Stream流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8EI-O%E9%80%9A%E9%81%93%E5%88%9B%E5%BB%BAStream%E6%B5%81"><span class="nav-number">3.2.3.</span> <span class="nav-text">从I&#x2F;O通道创建Stream流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96Stream%E6%B5%81%E5%88%9B%E5%BB%BA%E6%96%B9%E6%B3%95"><span class="nav-number">3.2.4.</span> <span class="nav-text">其他Stream流创建方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Operation"><span class="nav-number">3.3.</span> <span class="nav-text">3.Operation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%B5%81"><span class="nav-number">3.3.1.</span> <span class="nav-text">生成流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#forEach-%E9%81%8D%E5%8E%86"><span class="nav-number">3.3.2.</span> <span class="nav-text">forEach 遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#map-%E6%98%A0%E5%B0%84"><span class="nav-number">3.3.3.</span> <span class="nav-text">map 映射</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#filter-%E8%BF%87%E6%BB%A4"><span class="nav-number">3.3.4.</span> <span class="nav-text">filter 过滤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#limit-%E9%99%90%E5%88%B6"><span class="nav-number">3.3.5.</span> <span class="nav-text">limit 限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sorted-%E6%8E%92%E5%BA%8F"><span class="nav-number">3.3.6.</span> <span class="nav-text">sorted 排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C%EF%BC%88parallel%EF%BC%89%E7%A8%8B%E5%BA%8F"><span class="nav-number">3.3.7.</span> <span class="nav-text">并行（parallel）程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Collectors-%E6%94%B6%E9%9B%86"><span class="nav-number">3.3.8.</span> <span class="nav-text">Collectors 收集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reduce-%E5%BD%92%E7%BA%A6"><span class="nav-number">3.3.9.</span> <span class="nav-text">reduce 归约</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Improve"><span class="nav-number">4.</span> <span class="nav-text">Improve</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Demetrius2107</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("03/01/2023 10:00:00"); //此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒.";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/custom.js"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
