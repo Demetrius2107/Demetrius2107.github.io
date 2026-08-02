@@ -1,11 +1,11 @@
 # ====================== 基础站点配置（必改） ======================
-baseURL = "https://demetrius2107.netlify.app/"  # 你的Netlify域名
-languageCode = "en-us"
-locale = "en-us"
+baseURL = "https://demetrius2107.github.io/"  # 你的GitHub Pages域名
+languageCode = "zh-CN"
+locale = "zh-CN"
 title = "Demetrius' Blog"                    # 🔥 修复：双引号+无转义
 theme = "FixIt"                              # 启用FixIt主题
 author = "Demetrius"
-copyright = "Copyright © 2025 Demetrius"
+copyright = "Copyright © 2026 Demetrius"
 enableRobotsTXT = true
 
 # ====================== FixIt 主题核心配置 ======================
@@ -29,36 +29,65 @@ enableRobotsTXT = true
   summaryLength = 150
   paginate = 10
 
+# ====================== 首页个人档案 ======================
+[params.home.profile]
+  enable = true
+  onlyFirstPage = true
+  avatarURL = "/images/logo.png"
+  title = "Demetrius"
+  subtitle = "Stay hungry, stay foolish"
+  typeit = true
+  social = true
+
+# ====================== 首页文章列表 ======================
+[params.home.posts]
+  enable = true
+  paginate = 6
+
+# ====================== 顶部加载进度条 ======================
+[params.pace]
+  enable = true
+  color = "blue"
+  theme = "minimal"
+
+# ====================== 标签云 ======================
+[params.tagcloud]
+  enable = true
+  min = 14
+  max = 32
+  peakCount = 10
+  orderby = "name"
+
 # ====================== 顶部导航菜单 ======================
 [menu]
   [[menu.main]]
     identifier = "home"
-    name = "Home"
+    name = "首页"
     url = "/"
     weight = 1
 
   [[menu.main]]
     identifier = "archives"
-    name = "Archives"
+    name = "归档"
     url = "/archives/"
     weight = 2
 
   [[menu.main]]
     identifier = "tags"
-    name = "Tags"
+    name = "标签"
     url = "/tags/"
     weight = 3
 
   [[menu.main]]
     identifier = "about"
-    name = "About"
+    name = "关于"
     url = "/about/"
     weight = 4
 
 # ====================== 社交链接 ======================
 [params.social]
   GitHub = "Demetrius2107"
-  Email = "your-email@example.com"
+  Email = ""
 
 # ====================== 代码高亮配置 ======================
 [markup]

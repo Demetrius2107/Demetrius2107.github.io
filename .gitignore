@@ -1,6 +1,7 @@
 # Hugo生成的文件
 public/
 .hugo_build.lock
+resources/
 
 # 备份目录
 backup/

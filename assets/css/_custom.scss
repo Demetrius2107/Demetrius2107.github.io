@@ -1,0 +1,66 @@
+// ==========================================
+// Custom style — 青蓝色 (Cyan-Blue) 主题定制
+// 说明：覆盖 FixIt 主题的 CSS 变量（--fi-*），
+//       亮色在 :root，暗色在 [data-theme=dark]。
+// ==========================================
+
+// ---------- 亮色模式 ----------
+:root {
+  // 主题强调色（链接悬停、菜单激活、滚动条等）
+  --fi-global-link-hover-color: #0e9bd8;
+  --fi-menu-active-color: #0e9bd8;
+
+  // 选中文字底色
+  --fi-selection-color: rgba(14, 155, 216, 0.22);
+
+  // 滚动条
+  --fi-scrollbar-color: #9ec9de;
+  --fi-scrollbar-hover-color: #0e9bd8;
+
+  // 顶栏背景：微微青蓝的浅色
+  --fi-header-background-color: #f0f8fc;
+
+  // 边框与圆角（更柔和的卡片观感）
+  --fi-global-border-color: #d6e6ef;
+  --fi-global-border-radius: 8px;
+}
+
+// ---------- 暗色模式 ----------
+[data-theme=dark] {
+  --fi-global-link-hover-color: #4cc9f0;
+  --fi-menu-active-color: #4cc9f0;
+
+  --fi-selection-color: rgba(76, 201, 240, 0.3);
+
+  --fi-scrollbar-color: #5f6f7a;
+  --fi-scrollbar-hover-color: #4cc9f0;
+
+  --fi-header-background-color: #1d2428;
+
+  --fi-global-border-color: #37464f;
+  --fi-global-border-radius: 8px;
+}
+
+// ---------- 首页文章卡片增强 ----------
+.home.posts {
+  .post-entry {
+    border-radius: var(--fi-global-border-radius);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+
+    &:hover {
+      box-shadow: 0 4px 16px rgba(14, 155, 216, 0.12);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// ---------- 文章内容链接下划线柔和化 ----------
+.single-content a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+// ---------- 代码块圆角 ----------
+code, pre, .highlight {
+  border-radius: var(--fi-global-border-radius);
+}

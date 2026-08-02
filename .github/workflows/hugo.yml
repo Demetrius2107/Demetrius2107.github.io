@@ -28,20 +28,18 @@ jobs:
           hugo-version: 'latest'
           extended: true
 
-      # ✅ 修复1：进入 my-blog 文件夹再构建
+      # ✅ 构建：站点配置已平铺到仓库根目录
       - name: Build
-        run: |
-          cd my-blog
-          hugo --minify
+        run: hugo --minify
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
       
-      # ✅ 修复2：上传 my-blog/public 里的真实构建产物
+      # ✅ 上传根目录 public 里的真实构建产物
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./my-blog/public
+          path: ./public
 
       - name: Deploy to GitHub Pages
         id: deployment
