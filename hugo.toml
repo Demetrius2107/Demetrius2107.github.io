@@ -91,6 +91,9 @@ enableRobotsTXT = true
 
 # ====================== 代码高亮配置 ======================
 [markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true  # 允许正文内嵌 HTML（旧文章迁移自 Hexo HTML）
   [markup.highlight]
     codeFences = true
     guessSyntax = true
