@@ -1,0 +1,241 @@
+{{- define "title" -}}
+  {{- .Site.Title -}}
+{{- end -}}
+
+{{- define "content" -}}
+  {{- $pages := .Site.Store.Get "mainSectionPages" -}}
+  {{- if $pages -}}
+    {{- $pages = where $pages "Params.hiddenfromhomepage" "!=" true -}}
+  {{- else -}}
+    {{- $pages = where .Site.RegularPages "Section" "posts" -}}
+  {{- end -}}
+
+  <div class="page home">
+    {{- /* ============ 全屏欢迎层（点击进入后淡出） ============ */ -}}
+    <div class="welcome-screen" id="welcome-screen" aria-hidden="true">
+      <div class="welcome-inner">
+        <span class="welcome-eyebrow">Welcome to my blog</span>
+        <h1 class="welcome-title">{{ .Site.Params.home.profile.title | default .Site.Title }}</h1>
+        <p class="welcome-subtitle">{{ .Site.Params.description | default "Stay hungry, stay foolish" }}</p>
+        <button class="welcome-enter" id="welcome-enter" type="button">
+          <i class="fa-solid fa-arrow-right-long"></i> 进入博客
+        </button>
+      </div>
+    </div>
+    <script>
+      // 欢迎层：点击进入后淡出，期间锁定滚动
+      (function () {
+        var screen = document.getElementById('welcome-screen');
+        var enter = document.getElementById('welcome-enter');
+        if (!screen || !enter) { return; }
+        document.body.classList.add('welcome-lock');
+        enter.addEventListener('click', function () {
+          screen.classList.add('welcome-hidden');
+          document.body.classList.remove('welcome-lock');
+          setTimeout(function () { screen.remove(); }, 800);
+        });
+      })();
+    </script>
+
+    {{- /* ============ 欢迎 Hero 区 ============ */ -}}
+    <section class="home-hero">
+      <span class="hero-eyebrow">Welcome to my blog</span>
+      <h1 class="hero-title">Hi, I'm <em>{{ .Site.Params.home.profile.title | default .Site.Title }}</em></h1>
+      <p class="hero-subtitle">{{ .Site.Params.description | default "Stay hungry, stay foolish" }}</p>
+      <div class="hero-actions">
+        <a class="hero-btn-primary" href="#timeline">
+          <i class="fa-solid fa-arrow-down-long"></i> 进入博客
+        </a>
+        <a class="hero-btn-ghost" href="/about/">关于我</a>
+        {{- with .Site.Params.social.GitHub -}}
+          <a class="hero-btn-ghost" href="https://github.com/{{ . }}" rel="noopener noreferrer" target="_blank">
+            <i class="fa-brands fa-github"></i> GitHub
+          </a>
+        {{- end -}}
+      </div>
+    </section>
+
+    <div class="home-grid">
+      {{- /* ============ 左侧：个人介绍栏 ============ */ -}}
+      <aside class="home-sidebar">
+        {{- partial "home/profile.html" . -}}
+
+        <script>
+          // 头像加载失败时兜底显示名字首字母
+          (function () {
+            document.querySelectorAll('.home-avatar img').forEach(function (img) {
+              img.addEventListener('error', function () {
+                var title = document.querySelector('.home-title');
+                var name = (title && title.textContent.trim()) || 'D';
+                var fb = document.createElement('span');
+                fb.className = 'avatar-fallback';
+                fb.textContent = name.charAt(0).toUpperCase();
+                img.parentNode.replaceChild(fb, img);
+              });
+            });
+          })();
+        </script>
+
+        {{- /* 关于我简介 */ -}}
+        {{- with .Site.Params.home.about -}}
+          {{- if ne .enable false -}}
+            <div class="sidebar-card">
+              <h4 class="sidebar-card-title">关于我</h4>
+              <p class="sidebar-about">{{ .content | default .Site.Params.description }}</p>
+              <a class="sidebar-more" href="/about/">了解更多 →</a>
+            </div>
+          {{- end -}}
+        {{- end -}}
+
+        {{- /* 最新文章 */ -}}
+        <div class="sidebar-card">
+          <h4 class="sidebar-card-title">最新文章</h4>
+          <ul class="sidebar-recent">
+            {{- range first 5 $pages -}}
+              <li>
+                <a href="{{ .RelPermalink }}" title="{{ .Title }}">{{ .Title }}</a>
+                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+              </li>
+            {{- end -}}
+          </ul>
+        </div>
+
+        {{- /* 站点统计 */ -}}
+        {{- $words := 0 -}}
+        {{- range $pages -}}{{- $words = add $words .WordCount -}}{{- end -}}
+        <div class="sidebar-card">
+          <h4 class="sidebar-card-title">站点统计</h4>
+          <ul class="stats-list">
+            <li>文章<span>{{ len $pages }}</span></li>
+            <li>分类<span>{{ len .Site.Taxonomies.categories }}</span></li>
+            <li>标签<span>{{ len .Site.Taxonomies.tags }}</span></li>
+            <li>总字数<span>{{ $words }}</span></li>
+          </ul>
+        </div>
+
+        {{- /* 分类列表 */ -}}
+        {{- with .Site.Taxonomies.categories.ByCount -}}
+          <div class="sidebar-card">
+            <h4 class="sidebar-card-title">分类</h4>
+            <ul class="sidebar-cats">
+              {{- range . -}}
+                <li>
+                  <a href="{{ .Page.RelPermalink }}">
+                    <span>{{ .Page.Title }}</span><span class="count">{{ .Count }}</span>
+                  </a>
+                </li>
+              {{- end -}}
+            </ul>
+          </div>
+        {{- end -}}
+
+        {{- /* 标签云 */ -}}
+        {{- with .Site.Taxonomies.tags.ByCount -}}
+          <div class="sidebar-card">
+            <h4 class="sidebar-card-title">标签云</h4>
+            <div class="sidebar-tags">
+              {{- range first 20 . -}}
+                <a href="{{ .Page.RelPermalink }}" class="sidebar-tag">{{ .Page.Title }}</a>
+              {{- end -}}
+            </div>
+          </div>
+        {{- end -}}
+
+        {{- /* GitHub 卡片 */ -}}
+        {{- with .Site.Params.social.GitHub -}}
+          <div class="sidebar-card sidebar-github">
+            <h4 class="sidebar-card-title">GitHub</h4>
+            <a class="github-link" href="https://github.com/{{ . }}" rel="noopener noreferrer" target="_blank">
+              <i class="fa-brands fa-github"></i>
+              <span>
+                <strong>{{ . }}</strong>
+                <small>github.com/{{ . }}</small>
+              </span>
+            </a>
+          </div>
+        {{- end -}}
+      </aside>
+
+      {{- /* ============ 右侧：文章时间线 ============ */ -}}
+      <main class="home-main">
+        <div class="timeline" id="timeline">
+          {{- range sort ($pages.GroupByDate "2006") "Key" "desc" -}}
+            <section class="timeline-year-group">
+              <h2 class="timeline-year">
+                <span>{{ .Key }}</span>
+                <span class="timeline-year-count">{{ len .Pages }} 篇</span>
+              </h2>
+              <div class="timeline-items">
+                {{- range .Pages -}}
+                  <article class="timeline-item">
+                    <span class="timeline-dot"></span>
+                    <div class="timeline-card">
+                      <div class="tl-meta">
+                        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+                        {{- $cats := .GetTerms "categories" -}}
+                        {{- if $cats -}}
+                          <span class="tl-cats">
+                            {{- range $cats -}}
+                              <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+                            {{- end -}}
+                          </span>
+                        {{- end -}}
+                      </div>
+                      <h3 class="tl-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+                      {{- with .Summary -}}
+                        <p class="tl-summary">{{ . | plainify | truncate 120 }}</p>
+                      {{- end -}}
+                      {{- $tags := .GetTerms "tags" -}}
+                      {{- if $tags -}}
+                        <div class="tl-tags">
+                          {{- range $tags -}}
+                            <a href="{{ .RelPermalink }}" class="tl-tag">#{{ .LinkTitle }}</a>
+                          {{- end -}}
+                        </div>
+                      {{- end -}}
+                    </div>
+                  </article>
+                {{- end -}}
+              </div>
+            </section>
+          {{- end -}}
+        </div>
+
+        {{- /* 关于我全文区块 */ -}}
+        {{- with .Site.Params.home.about -}}
+          {{- if ne .enable false -}}
+            <section class="home-block about-block" id="about">
+              <h2 class="block-title">关于我</h2>
+              <div class="block-body">
+                <p>{{ .content | default .Site.Params.description }}</p>
+                <p>这里记录我在编程路上的学习笔记、踩坑复盘与随想。欢迎通过 GitHub 与我交流。</p>
+                <a class="block-more" href="/about/">完整介绍 →</a>
+              </div>
+            </section>
+          {{- end -}}
+        {{- end -}}
+
+        {{- /* 技术栈区块 */ -}}
+        {{- with .Site.Params.home.skills -}}
+          {{- if ne .enable false -}}
+            <section class="home-block skills-block" id="skills">
+              <h2 class="block-title">技术栈</h2>
+              <div class="skill-groups">
+                {{- range .groups -}}
+                  <div class="skill-group">
+                    <h3 class="skill-group-title">{{ .title }}</h3>
+                    <div class="skill-items">
+                      {{- range .items -}}
+                        <span class="skill-item">{{ . }}</span>
+                      {{- end -}}
+                    </div>
+                  </div>
+                {{- end -}}
+              </div>
+            </section>
+          {{- end -}}
+        {{- end -}}
+      </main>
+    </div>
+  </div>
+{{- end -}}

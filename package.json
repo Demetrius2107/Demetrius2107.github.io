@@ -1,4 +1,14 @@
 {
+  "name": "Deterius2107githubio",
+  "version": "1.0.0",
+  "description": "Demetrius 的 Hugo 静态博客（FixIt 主题）",
+  "scripts": {
+    "start": "hugo server",
+    "dev": "hugo server",
+    "build": "hugo --minify",
+    "new-post": "bash new-post.sh",
+    "publish": "bash publish.sh"
+  },
   "dependencies": {
     "decap-cms": "^3.11.0"
   }

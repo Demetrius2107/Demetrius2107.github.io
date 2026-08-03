@@ -89,6 +89,33 @@ enableRobotsTXT = true
   GitHub = "Demetrius2107"
   Email = ""
 
+# ====================== 首页额外区块 ======================
+[params.home.about]
+  enable = true
+  content = "热爱编程与技术的 Demetrius，专注于 Java、Python、Go 语言的学习与实践，记录技术成长路上的思考与收获。Stay hungry, stay foolish。"
+
+[params.home.skills]
+  enable = true
+  groups = [
+    { title = "编程语言", items = ["Java", "Python", "Go", "SQL"] },
+    { title = "后端开发", items = ["Spring Boot", "微服务", "RESTful API", "MyBatis"] },
+    { title = "工具链", items = ["Git", "Docker", "Hugo", "Linux"] },
+    { title = "前端", items = ["HTML", "CSS", "JavaScript"] },
+  ]
+
+# ====================== 页脚配置 ======================
+[params.footer]
+  since = 2026
+  license = "君问归期未有期，巴山夜雨涨秋池"  # 替换默认的“Hugo 强力驱动|主题 FixIt”
+
+  [params.footer.powered]
+    enable = false  # 关闭 “Hugo 强力驱动 | 主题 - FixIt” 那一行
+
+# ====================== 作者信息 ======================
+[params.author]
+  name = "Demetrius"
+  link = "/"
+
 # ====================== 代码高亮配置 ======================
 [markup]
   [markup.goldmark]
