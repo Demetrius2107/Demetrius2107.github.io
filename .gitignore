@@ -26,3 +26,7 @@ Thumbs.db
 # 临时文件
 *.tmp
 *.temp
+
+# 敏感信息（CMS 登录 Token 等，禁止提交）
+CMS token.md
+*token*.md
