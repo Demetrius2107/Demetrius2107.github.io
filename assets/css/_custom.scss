@@ -1,13 +1,126 @@
 // ==========================================
-// Custom style — 灰绿 (Sage) 忧郁系主题定制
+// Custom style — 秋月 (Autumn Moon) 主题定制
 // 说明：覆盖 FixIt 主题的 CSS 变量（--fi-*），
 //       亮色在 :root，暗色在 [data-theme=dark]。
 //       本文件在 style.scss 中最后 import，优先级最高。
+//       配色呼应站点 favicon 与后台：秋橙 + 深蓝夜空
 // ==========================================
 
-// ---------- 亮色模式 ----------
+// ---------- 亮色模式：暖米白 + 秋橙 ----------
 :root {
-  // 页面整体背景：极浅暖灰绿，替代默认纯白
+  // 页面整体背景：暖米白，替代默认纯白
+  --fi-global-background-color: #faf5ec;
+
+  // 文字颜色：暖黑
+  --fi-global-font-color: #3a3229;
+  --fi-global-font-secondary-color: #6f6455;
+  --fi-global-placeholder-color: #a3967f;
+
+  // 主题强调色：秋橙（呼应一轮秋月）
+  --fi-primary: #d97706;
+  --fi-secondary: #b8860b;
+  --fi-accent-rgb: 217, 119, 6; /* 主色 RGB 三元组，供 rgba() 阴影/背景复用 */
+  --fi-global-link-hover-color: #b45309;
+  --fi-menu-active-color: #b45309;
+  --fi-single-link-color: #d97706;
+  --fi-single-link-hover-color: #b45309;
+
+  // 选中文字底色
+  --fi-selection-color: rgba(var(--fi-accent-rgb), 0.18);
+
+  // 滚动条
+  --fi-scrollbar-color: #d8b98c;
+  --fi-scrollbar-hover-color: #d97706;
+
+  // 顶栏背景：暖米黄
+  --fi-header-background-color: #f5ead9;
+
+  // 搜索框背景
+  --fi-search-background-color: #f0e2c8;
+
+  // 边框与圆角
+  --fi-global-border-color: #e8dcc8;
+  --fi-global-border-color-light: #efe6d4;
+  --fi-global-border-color-weight: #d4c2a2;
+  --fi-global-border-radius: 8px;
+
+  // 表格
+  --fi-table-background-color: #f7efdf;
+  --fi-table-thead-color: #f0e2c8;
+
+  // 引用块
+  --fi-blockquote-color: #8a6d3b;
+
+  // 行内代码
+  --fi-code-inline-background-color: rgba(var(--fi-accent-rgb), 0.09);
+  --fi-code-color: #8a5a1e;
+
+  // 代码块
+  --fi-code-block-background-color: #f6ecda;
+  --fi-code-header-background-color: #efe0c4;
+  --fi-code-header-color: #6f5a33;
+}
+
+// ---------- 暗色模式：深蓝夜空 + 暖橙月 ----------
+[data-theme=dark] {
+  // 页面整体背景：深蓝夜空
+  --fi-global-background-color: #101a2e;
+
+  // 文字颜色：月白
+  --fi-global-font-color: #d6dde8;
+  --fi-global-font-secondary-color: #9aa8bd;
+  --fi-global-placeholder-color: #6c7a8f;
+  --fi-global-link-color: #d6dde8;
+
+  // 主题强调色：暖橙月
+  --fi-primary: #f0a45a;
+  --fi-secondary: #c9a45c;
+  --fi-accent-rgb: 240, 164, 90; /* 主色 RGB 三元组 */
+  --fi-global-link-hover-color: #ffc27a;
+  --fi-menu-active-color: #ffc27a;
+  --fi-single-link-color: #f0a45a;
+  --fi-single-link-hover-color: #ffc27a;
+
+  // 选中文字底色
+  --fi-selection-color: rgba(240, 164, 90, 0.28);
+
+  // 滚动条
+  --fi-scrollbar-color: #2c3d5c;
+  --fi-scrollbar-hover-color: #f0a45a;
+
+  // 顶栏背景：夜空深一度
+  --fi-header-background-color: #14203a;
+
+  // 搜索框背景
+  --fi-search-background-color: #182640;
+
+  // 边框
+  --fi-global-border-color: #23355c;
+  --fi-global-border-color-light: #1c2b4a;
+  --fi-global-border-color-weight: #2e4269;
+  --fi-global-border-radius: 8px;
+
+  // 表格
+  --fi-table-background-color: #141f38;
+  --fi-table-thead-color: #101a2e;
+
+  // 引用块
+  --fi-blockquote-color: #b8a06e;
+
+  // 行内代码
+  --fi-code-inline-background-color: rgba(240, 164, 90, 0.14);
+  --fi-code-color: #ffc27a;
+
+  // 代码块
+  --fi-code-block-background-color: #0c1526;
+  --fi-code-header-background-color: #131f36;
+  --fi-code-header-color: #9aa8bd;
+}
+
+// ==================== 配色方案二：灰绿 Sage ====================
+// 切换方式：<html data-scheme="sage">，JS 写入并持久化到 localStorage
+[data-scheme=sage] {
+  // 页面整体背景：极浅暖灰绿
   --fi-global-background-color: #f3f5f0;
 
   // 文字颜色
@@ -15,9 +128,10 @@
   --fi-global-font-secondary-color: #5c6a60;
   --fi-global-placeholder-color: #8a968c;
 
-  // 主题强调色：灰绿（sage），低饱和、忧郁而克制
+  // 主题强调色：灰绿（sage），低饱和、克制
   --fi-primary: #3b7a57;
   --fi-secondary: #5c6a60;
+  --fi-accent-rgb: 59, 122, 87;
   --fi-global-link-hover-color: #2f6247;
   --fi-menu-active-color: #2f6247;
   --fi-single-link-color: #3b7a57;
@@ -59,8 +173,7 @@
   --fi-code-header-color: #455a49;
 }
 
-// ---------- 暗色模式 ----------
-[data-theme=dark] {
+[data-scheme=sage][data-theme=dark] {
   // 页面整体背景：墨绿黑
   --fi-global-background-color: #1a201b;
 
@@ -73,6 +186,7 @@
   // 主题强调色：雾灰绿
   --fi-primary: #8fbc9f;
   --fi-secondary: #8a9c8e;
+  --fi-accent-rgb: 143, 188, 159;
   --fi-global-link-hover-color: #a9d0b4;
   --fi-menu-active-color: #a9d0b4;
   --fi-single-link-color: #8fbc9f;
@@ -112,6 +226,116 @@
   --fi-code-block-background-color: #161d18;
   --fi-code-header-background-color: #1d2620;
   --fi-code-header-color: #8a9c8e;
+}
+
+// ==================== 配色方案三：FixIt 原生蓝 ====================
+[data-scheme=blue] {
+  // 页面整体背景：纯白
+  --fi-global-background-color: #fff;
+
+  // 文字颜色
+  --fi-global-font-color: #161209;
+  --fi-global-font-secondary-color: #5f5f5f;
+  --fi-global-placeholder-color: #999;
+
+  // 主题强调色：FixIt 原生蓝
+  --fi-primary: #1677ff;
+  --fi-secondary: #6aa1f0;
+  --fi-accent-rgb: 22, 119, 255;
+  --fi-global-link-hover-color: #0958d9;
+  --fi-menu-active-color: #1677ff;
+  --fi-single-link-color: #1677ff;
+  --fi-single-link-hover-color: #0958d9;
+
+  // 选中文字底色
+  --fi-selection-color: rgba(53, 166, 247, 0.25);
+
+  // 滚动条
+  --fi-scrollbar-color: #a6a6a6;
+  --fi-scrollbar-hover-color: #7d7d7d;
+
+  // 顶栏背景
+  --fi-header-background-color: #f8f8f8;
+
+  // 搜索框背景
+  --fi-search-background-color: #e9e9e9;
+
+  // 边框与圆角
+  --fi-global-border-color: #e3e3e3;
+  --fi-global-border-color-light: #f0f0f0;
+  --fi-global-border-color-weight: #d6d6d6;
+  --fi-global-border-radius: 8px;
+
+  // 表格
+  --fi-table-background-color: #fff;
+  --fi-table-thead-color: #ededed;
+
+  // 引用块
+  --fi-blockquote-color: #555;
+
+  // 行内代码
+  --fi-code-inline-background-color: rgba(22, 119, 255, 0.09);
+  --fi-code-color: #1677ff;
+
+  // 代码块
+  --fi-code-block-background-color: #f6f8fa;
+  --fi-code-header-background-color: #eaeef2;
+  --fi-code-header-color: #57606a;
+}
+
+[data-scheme=blue][data-theme=dark] {
+  // 页面整体背景：FixIt 原生暗灰
+  --fi-global-background-color: #292a2e;
+
+  // 文字颜色
+  --fi-global-font-color: #b1b1ba;
+  --fi-global-font-secondary-color: #8f9ba8;
+  --fi-global-placeholder-color: #6c7680;
+  --fi-global-link-color: #b1b1ba;
+
+  // 主题强调色：原生亮蓝
+  --fi-primary: #0069fc;
+  --fi-secondary: #4a8fe0;
+  --fi-accent-rgb: 0, 105, 252;
+  --fi-global-link-hover-color: #4a9eff;
+  --fi-menu-active-color: #4a9eff;
+  --fi-single-link-color: #0069fc;
+  --fi-single-link-hover-color: #4a9eff;
+
+  // 选中文字底色
+  --fi-selection-color: rgba(50, 112, 194, 0.4);
+
+  // 滚动条
+  --fi-scrollbar-color: #a6a6a6;
+  --fi-scrollbar-hover-color: #7d7d7d;
+
+  // 顶栏背景
+  --fi-header-background-color: #252627;
+
+  // 搜索框背景
+  --fi-search-background-color: #363636;
+
+  // 边框
+  --fi-global-border-color: #454545;
+  --fi-global-border-color-light: #383838;
+  --fi-global-border-color-weight: #525252;
+  --fi-global-border-radius: 8px;
+
+  // 表格
+  --fi-table-background-color: #292a2e;
+  --fi-table-thead-color: #303136;
+
+  // 引用块
+  --fi-blockquote-color: #8f9ba8;
+
+  // 行内代码
+  --fi-code-inline-background-color: rgba(0, 105, 252, 0.15);
+  --fi-code-color: #4a9eff;
+
+  // 代码块
+  --fi-code-block-background-color: #232428;
+  --fi-code-header-background-color: #1c1d1f;
+  --fi-code-header-color: #8f9ba8;
 }
 
 // ---------- 欢迎 Hero 区 ----------
@@ -175,7 +399,7 @@
       &:hover {
         background: var(--fi-global-link-hover-color);
         transform: translateY(-2px);
-        box-shadow: 0 4px 16px rgba(59, 122, 87, 0.25);
+        box-shadow: 0 4px 16px rgba(var(--fi-accent-rgb), 0.25);
       }
     }
 
@@ -222,7 +446,7 @@
       background: var(--fi-global-background-color);
       border: 1px solid var(--fi-global-border-color);
       border-radius: var(--fi-global-border-radius);
-      box-shadow: 0 2px 12px rgba(59, 122, 87, 0.06);
+      box-shadow: 0 2px 12px rgba(var(--fi-accent-rgb), 0.06);
       text-align: center;
 
       .home-subtitle {
@@ -253,7 +477,7 @@
       background: var(--fi-global-background-color);
       border: 1px solid var(--fi-global-border-color);
       border-radius: var(--fi-global-border-radius);
-      box-shadow: 0 2px 12px rgba(59, 122, 87, 0.06);
+      box-shadow: 0 2px 12px rgba(var(--fi-accent-rgb), 0.06);
 
       .sidebar-card-title {
         margin: 0 0 12px;
@@ -308,14 +532,14 @@
           transition: background 0.2s ease;
 
           &:hover {
-            background: rgba(59, 122, 87, 0.08);
+            background: rgba(var(--fi-accent-rgb), 0.08);
             color: var(--fi-primary);
           }
 
           .count {
             font-size: 12px;
             color: var(--fi-global-font-secondary-color);
-            background: rgba(59, 122, 87, 0.1);
+            background: rgba(var(--fi-accent-rgb), 0.1);
             padding: 1px 8px;
             border-radius: 10px;
           }
@@ -407,7 +631,7 @@
         transition: background 0.2s ease;
 
         &:hover {
-          background: rgba(59, 122, 87, 0.1);
+          background: rgba(var(--fi-accent-rgb), 0.1);
         }
 
         i {
@@ -479,7 +703,7 @@
             font-size: 12px;
             font-weight: 400;
             color: var(--fi-global-font-secondary-color);
-            background: rgba(59, 122, 87, 0.08);
+            background: rgba(var(--fi-accent-rgb), 0.08);
             padding: 2px 10px;
             border-radius: 10px;
           }
@@ -511,7 +735,7 @@
             border-radius: 50%;
             background: var(--fi-global-background-color);
             border: 2.5px solid var(--fi-primary);
-            box-shadow: 0 0 0 3px rgba(59, 122, 87, 0.15);
+            box-shadow: 0 0 0 3px rgba(var(--fi-accent-rgb), 0.15);
           }
 
           .timeline-card {
@@ -519,11 +743,11 @@
             background: var(--fi-global-background-color);
             border: 1px solid var(--fi-global-border-color);
             border-radius: var(--fi-global-border-radius);
-            box-shadow: 0 2px 12px rgba(59, 122, 87, 0.06);
+            box-shadow: 0 2px 12px rgba(var(--fi-accent-rgb), 0.06);
             transition: box-shadow 0.25s ease, transform 0.25s ease;
 
             &:hover {
-              box-shadow: 0 6px 20px rgba(59, 122, 87, 0.14);
+              box-shadow: 0 6px 20px rgba(var(--fi-accent-rgb), 0.14);
               transform: translateY(-2px);
             }
 
@@ -625,7 +849,7 @@
         background: var(--fi-global-background-color);
         border: 1px solid var(--fi-global-border-color);
         border-radius: var(--fi-global-border-radius);
-        box-shadow: 0 2px 12px rgba(59, 122, 87, 0.06);
+        box-shadow: 0 2px 12px rgba(var(--fi-accent-rgb), 0.06);
 
         p {
           margin: 0 0 12px;
@@ -669,7 +893,7 @@
         background: var(--fi-global-background-color);
         border: 1px solid var(--fi-global-border-color);
         border-radius: var(--fi-global-border-radius);
-        box-shadow: 0 2px 12px rgba(59, 122, 87, 0.06);
+        box-shadow: 0 2px 12px rgba(var(--fi-accent-rgb), 0.06);
 
         .skill-group-title {
           margin: 0 0 12px;
@@ -689,7 +913,7 @@
           font-size: 12px;
           padding: 4px 12px;
           border-radius: 14px;
-          background: rgba(59, 122, 87, 0.1);
+          background: rgba(var(--fi-accent-rgb), 0.1);
           color: var(--fi-global-font-color);
           transition: all 0.2s ease;
 
@@ -722,8 +946,8 @@
   justify-content: center;
   text-align: center;
   background:
-    radial-gradient(ellipse at 30% 20%, rgba(59, 122, 87, 0.28), transparent 55%),
-    radial-gradient(ellipse at 75% 80%, rgba(59, 122, 87, 0.18), transparent 50%),
+    radial-gradient(ellipse at 30% 20%, rgba(var(--fi-accent-rgb), 0.28), transparent 55%),
+    radial-gradient(ellipse at 75% 80%, rgba(var(--fi-accent-rgb), 0.18), transparent 50%),
     var(--fi-global-background-color);
   transition: opacity 0.7s ease, visibility 0.7s ease;
 
@@ -783,7 +1007,7 @@
       &:hover {
         background: var(--fi-global-link-hover-color);
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(59, 122, 87, 0.3);
+        box-shadow: 0 6px 20px rgba(var(--fi-accent-rgb), 0.3);
       }
     }
   }
@@ -820,7 +1044,7 @@ body.welcome-lock {
     transition: background 0.25s ease, color 0.25s ease;
 
     &:hover {
-      background: rgba(59, 122, 87, 0.12);
+      background: rgba(var(--fi-accent-rgb), 0.12);
       color: var(--fi-global-link-hover-color);
       border-radius: 20px;
     }
@@ -829,7 +1053,7 @@ body.welcome-lock {
   // 当前激活页：绿色胶囊
   &.active > .menu-link,
   &.active > .nested-item > .menu-link {
-    background: rgba(59, 122, 87, 0.14);
+    background: rgba(var(--fi-accent-rgb), 0.14);
     color: var(--fi-menu-active-color);
     border-radius: 20px;
   }
