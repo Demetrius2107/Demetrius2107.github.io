@@ -7,6 +7,19 @@
 </head>
 <body>
   <!-- Sveltia CMS（Decap CMS 的现代替代，样式内联在 JS 中，无需单独 css） -->
+  <style>
+    /* ===== 后台主题定制（覆盖 Sveltia UI 的 CSS 变量） ===== */
+    :root {
+      /* 主色调色相：秋月暖橙（0 红 / 35 橙 / 210 蓝 / 260 紫），改这一个值即可整体换肤 */
+      --sui-base-hue: 35;
+      /* 界面字体：优先中文字体栈，保证中文排版舒服 */
+      --sui-font-family-default: "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+        "Microsoft YaHei", system-ui, sans-serif;
+      /* 代码字体 */
+      --sui-font-family-monospace: "JetBrains Mono", ui-monospace, "Cascadia Code",
+        Consolas, monospace;
+    }
+  </style>
   <script src="https://cdn.jsdelivr.net/npm/@sveltia/cms@0.178.0/dist/sveltia-cms.js"></script>
 </body>
 </html>

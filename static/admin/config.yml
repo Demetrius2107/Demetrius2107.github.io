@@ -6,6 +6,12 @@ backend:
   # 仅用 Token 登录：无需 OAuth App、无需自建服务，token 保存在浏览器本地
   auth_methods: [token]
 
+# 品牌自定义：后台 Logo 与标题
+logo:
+  src: /images/logo.png   # 复用站点 Logo（建议 512×512 透明底）
+  show_in_header: true    # 在顶栏显示
+app_title: "Demetrius 博客后台"
+
 # 媒体文件（图片/附件）配置
 media_folder: "/static/images"  # 图片上传后存放的仓库路径
 public_folder: "/images"                # 网站上访问图片的路径（对应 /images）
