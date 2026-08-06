@@ -26,7 +26,7 @@ collections:
     fields:                  # 文档字段（对应 Hugo 的 Front Matter + 内容）
       - { label: "标题", name: "title", widget: "string", required: true }
       - { label: "副标题", name: "subtitle", widget: "string", required: false }
-      - { label: "发布日期", name: "date", widget: "datetime", required: true }
+      - { label: "发布日期", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ", required: true }
       - { label: "草稿", name: "draft", widget: "boolean", default: false, required: false }
       - { label: "标签", name: "tags", widget: "list", required: false }
       - { label: "分类", name: "categories", widget: "list", required: false }
