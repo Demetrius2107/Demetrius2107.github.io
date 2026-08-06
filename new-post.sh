@@ -2,7 +2,8 @@
 # ============================================================
 # new-post.sh — 本地新建一篇博文
 # 用法:  ./new-post.sh "文章标题"
-# 效果:  自动生成带 front matter 的 Markdown 文件并打开编辑器
+# 效果:  自动生成带完整 front matter 的 Markdown 文件并打开编辑器
+# 模板:  archetypes/posts.md（与 CMS 后台字段保持一致）
 # ============================================================
 set -euo pipefail
 
@@ -27,14 +28,36 @@ fi
 
 mkdir -p content/posts
 cat > "$FILENAME" <<EOF
-+++
-title = '${TITLE}'
-date = '${DATE}T$(date +%H:%M:%S)+08:00'
-draft = false
-tags = []
-categories = []
-description = ''
-+++
+---
+title: ${TITLE}
+subtitle:
+date: ${DATE}T$(date +%H:%M:%S)+08:00
+slug: ${SLUG}
+draft: true
+author:
+  name: Demetrius
+  link: /
+description:
+keywords:
+comment: true
+weight: 0
+tags:
+categories:
+hiddenFromHomePage: false
+hiddenFromSearch: false
+hiddenFromRelated: false
+hiddenFromFeed: false
+summary:
+featuredImagePreview:
+featuredImage:
+password:
+message:
+repost:
+  enable: false
+  url:
+---
+
+<!--more-->
 
 在这里开始写作……
 EOF

@@ -25,8 +25,28 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"  # 文件名生成规则（日期+标题）
     fields:                  # 文档字段（对应 Hugo 的 Front Matter + 内容）
       - { label: "标题", name: "title", widget: "string", required: true }
+      - { label: "副标题", name: "subtitle", widget: "string", required: false }
       - { label: "发布日期", name: "date", widget: "datetime", required: true }
+      - { label: "草稿", name: "draft", widget: "boolean", default: false, required: false }
       - { label: "标签", name: "tags", widget: "list", required: false }
       - { label: "分类", name: "categories", widget: "list", required: false }
       - { label: "摘要", name: "description", widget: "text", required: false }
+      - { label: "关键词", name: "keywords", widget: "list", required: false }
+      - { label: "是否允许评论", name: "comment", widget: "boolean", default: true, required: false }
+      - { label: "封面图（列表）", name: "featuredImagePreview", widget: "image", required: false }
+      - { label: "封面图（正文）", name: "featuredImage", widget: "image", required: false }
+      - { label: "访问密码（留空不加密）", name: "password", widget: "string", required: false }
+      - { label: "加密提示语", name: "message", widget: "string", required: false }
+      - { label: "首页隐藏", name: "hiddenFromHomePage", widget: "boolean", default: false, required: false }
+      - { label: "搜索隐藏", name: "hiddenFromSearch", widget: "boolean", default: false, required: false }
+      - { label: "文档内容", name: "body", widget: "markdown", required: true }
+
+  - name: "about"            # 关于页面集合
+    label: "关于页面"        # 后台显示的名称
+    folder: "/content/about" # 文档实际存放的目录
+    create: false            # 不允许新建，只编辑现有的 about 页面
+    fields:
+      - { label: "标题", name: "title", widget: "string", required: true }
+      - { label: "发布日期", name: "date", widget: "datetime", required: false }
+      - { label: "描述", name: "description", widget: "text", required: false }
       - { label: "文档内容", name: "body", widget: "markdown", required: true }
