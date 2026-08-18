@@ -1,9 +1,15 @@
 // ==========================================
-// Custom style — 秋月 (Autumn Moon) 主题定制
+// Custom style — 五套配色方案
 // 说明：覆盖 FixIt 主题的 CSS 变量（--fi-*），
-//       亮色在 :root，暗色在 [data-theme=dark]。
+//       亮色在 :root / [data-scheme=...]，暗色在 [data-theme=dark]。
 //       本文件在 style.scss 中最后 import，优先级最高。
-//       配色呼应站点 favicon 与后台：秋橙 + 深蓝夜空
+//
+//       五套配色（顶栏调色板按钮循环切换，localStorage 持久化）：
+//       1. 秋月 autumn — 净白底 + 焦橙（默认）
+//       2. 灰绿 sage   — 冷调浅灰绿 + 深森林绿
+//       3. 原生蓝 blue — GitHub 风格蓝
+//       4. 石墨 graphite — Apple 官网风：冷灰白 + 石墨灰 + Apple 蓝
+//       5. 靛蓝 indigo — Linear/Vercel 风：极净底 + 靛紫
 //
 //       骨架向 Apple / ChatGPT 靠拢：
 //       SF Pro 字体栈、大圆角、无边框弥散阴影、极致留白、胶囊按钮
@@ -40,336 +46,563 @@ html {
   --card-bg: rgba(255, 255, 255, 0.04);
 }
 
-// ---------- 亮色模式：暖米白 + 秋橙 ----------
+// ---------- 亮色模式：秋月（净白底 + 焦橙） ----------
+// 设计思路：底色从"暖米黄"改为"近白微暖"，文字从"棕"改为"近黑"，
+//           让焦橙强调色在干净底色上"跳"出来，而非全屏发黄。
 :root {
-  // 页面整体背景：暖米白，替代默认纯白
-  --fi-global-background-color: #faf5ec;
+  // 页面整体背景：近白微暖（从 #faf5ec 收敛到 #f8f7f4，去掉黄气）
+  --fi-global-background-color: #f8f7f4;
 
-  // 文字颜色：暖黑
-  --fi-global-font-color: #3a3229;
-  --fi-global-font-secondary-color: #6f6455;
-  --fi-global-placeholder-color: #a3967f;
+  // 文字颜色：近黑微暖（从 #3a3229 加深到 #211e1a，更锐利）
+  --fi-global-font-color: #211e1a;
+  --fi-global-font-secondary-color: #62594f;
+  --fi-global-placeholder-color: #9a9088;
 
-  // 主题强调色：秋橙（呼应一轮秋月）
-  --fi-primary: #d97706;
-  --fi-secondary: #b8860b;
-  --fi-accent-rgb: 217, 119, 6; /* 主色 RGB 三元组，供 rgba() 阴影/背景复用 */
-  --fi-global-link-hover-color: #b45309;
-  --fi-menu-active-color: #b45309;
-  --fi-single-link-color: #d97706;
-  --fi-single-link-hover-color: #b45309;
+  // 主题强调色：焦橙（从 #d97706 改为 #b45309，更沉更高级）
+  --fi-primary: #b45309;
+  --fi-secondary: #92400e;
+  --fi-accent-rgb: 180, 83, 9;
+  --fi-global-link-hover-color: #9a3412;
+  --fi-menu-active-color: #9a3412;
+  --fi-single-link-color: #b45309;
+  --fi-single-link-hover-color: #9a3412;
 
   // 选中文字底色
-  --fi-selection-color: rgba(var(--fi-accent-rgb), 0.18);
+  --fi-selection-color: rgba(var(--fi-accent-rgb), 0.16);
 
   // 滚动条
-  --fi-scrollbar-color: #d8b98c;
-  --fi-scrollbar-hover-color: #d97706;
+  --fi-scrollbar-color: #d4cabe;
+  --fi-scrollbar-hover-color: #b45309;
 
-  // 顶栏背景：暖米黄
-  --fi-header-background-color: #f5ead9;
+  // 顶栏背景：微暖灰白（从 #f5ead9 收敛到 #f2efe9）
+  --fi-header-background-color: #f2efe9;
 
   // 搜索框背景
-  --fi-search-background-color: #f0e2c8;
+  --fi-search-background-color: #ece7df;
 
   // 边框与圆角
-  --fi-global-border-color: #e8dcc8;
-  --fi-global-border-color-light: #efe6d4;
-  --fi-global-border-color-weight: #d4c2a2;
+  --fi-global-border-color: #e5e0d8;
+  --fi-global-border-color-light: #ede9e2;
+  --fi-global-border-color-weight: #d1c9bc;
   --fi-global-border-radius: 12px;
 
   // 表格
-  --fi-table-background-color: #f7efdf;
-  --fi-table-thead-color: #f0e2c8;
+  --fi-table-background-color: #f4f1ea;
+  --fi-table-thead-color: #ece7df;
 
   // 引用块
-  --fi-blockquote-color: #8a6d3b;
+  --fi-blockquote-color: #7a6240;
 
   // 行内代码
-  --fi-code-inline-background-color: rgba(var(--fi-accent-rgb), 0.09);
-  --fi-code-color: #8a5a1e;
+  --fi-code-inline-background-color: rgba(var(--fi-accent-rgb), 0.08);
+  --fi-code-color: #92400e;
 
   // 代码块
-  --fi-code-block-background-color: #f6ecda;
-  --fi-code-header-background-color: #efe0c4;
-  --fi-code-header-color: #6f5a33;
+  --fi-code-block-background-color: #f3efe7;
+  --fi-code-header-background-color: #e8e2d6;
+  --fi-code-header-color: #5c4f3a;
 }
 
-// ---------- 暗色模式：深蓝夜空 + 暖橙月 ----------
+// ---------- 暗色模式：秋夜（暖墨底 + 月光橙） ----------
+// 从"深蓝夜空"改为"暖墨夜"——秋夜不是冷蓝的，是深褐里透着一缕月色。
 [data-theme=dark] {
-  // 页面整体背景：深蓝夜空
-  --fi-global-background-color: #101a2e;
+  // 页面整体背景：暖墨（从 #101a2e 蓝改为 #181715 暖褐）
+  --fi-global-background-color: #181715;
 
-  // 文字颜色：月白
-  --fi-global-font-color: #d6dde8;
-  --fi-global-font-secondary-color: #9aa8bd;
-  --fi-global-placeholder-color: #6c7a8f;
-  --fi-global-link-color: #d6dde8;
+  // 文字颜色：月光白（从 #d6dde8 蓝白改为 #e6e0d6 暖白）
+  --fi-global-font-color: #e6e0d6;
+  --fi-global-font-secondary-color: #a89e90;
+  --fi-global-placeholder-color: #7a7064;
+  --fi-global-link-color: #e6e0d6;
 
-  // 主题强调色：暖橙月
-  --fi-primary: #f0a45a;
+  // 主题强调色：月光橙（从 #f0a45a 微调到 #e89856，更柔和）
+  --fi-primary: #e89856;
   --fi-secondary: #c9a45c;
-  --fi-accent-rgb: 240, 164, 90; /* 主色 RGB 三元组 */
-  --fi-global-link-hover-color: #ffc27a;
-  --fi-menu-active-color: #ffc27a;
-  --fi-single-link-color: #f0a45a;
-  --fi-single-link-hover-color: #ffc27a;
+  --fi-accent-rgb: 232, 152, 86;
+  --fi-global-link-hover-color: #f5b07a;
+  --fi-menu-active-color: #f5b07a;
+  --fi-single-link-color: #e89856;
+  --fi-single-link-hover-color: #f5b07a;
 
   // 选中文字底色
-  --fi-selection-color: rgba(240, 164, 90, 0.28);
+  --fi-selection-color: rgba(232, 152, 86, 0.26);
 
   // 滚动条
-  --fi-scrollbar-color: #2c3d5c;
-  --fi-scrollbar-hover-color: #f0a45a;
+  --fi-scrollbar-color: #3a352e;
+  --fi-scrollbar-hover-color: #e89856;
 
-  // 顶栏背景：夜空深一度
-  --fi-header-background-color: #14203a;
+  // 顶栏背景：暖墨深一度
+  --fi-header-background-color: #1f1d1a;
 
   // 搜索框背景
-  --fi-search-background-color: #182640;
+  --fi-search-background-color: #242120;
 
   // 边框
-  --fi-global-border-color: #23355c;
-  --fi-global-border-color-light: #1c2b4a;
-  --fi-global-border-color-weight: #2e4269;
+  --fi-global-border-color: #2d2a25;
+  --fi-global-border-color-light: #252220;
+  --fi-global-border-color-weight: #3d3933;
   --fi-global-border-radius: 12px;
 
   // 表格
-  --fi-table-background-color: #141f38;
-  --fi-table-thead-color: #101a2e;
+  --fi-table-background-color: #1e1c19;
+  --fi-table-thead-color: #181715;
 
   // 引用块
   --fi-blockquote-color: #b8a06e;
 
   // 行内代码
-  --fi-code-inline-background-color: rgba(240, 164, 90, 0.14);
-  --fi-code-color: #ffc27a;
+  --fi-code-inline-background-color: rgba(232, 152, 86, 0.14);
+  --fi-code-color: #f5b07a;
 
   // 代码块
-  --fi-code-block-background-color: #0c1526;
-  --fi-code-header-background-color: #131f36;
-  --fi-code-header-color: #9aa8bd;
+  --fi-code-block-background-color: #131210;
+  --fi-code-header-background-color: #1c1a17;
+  --fi-code-header-color: #a89e90;
 }
 
 // ==================== 配色方案二：灰绿 Sage ====================
-// 切换方式：<html data-scheme="sage">，JS 写入并持久化到 localStorage
+// 精修：加深主色饱和度，让绿色更有存在感；底色更冷更净
 [data-scheme=sage] {
-  // 页面整体背景：极浅暖灰绿
-  --fi-global-background-color: #f3f5f0;
+  // 页面整体背景：冷调浅灰绿（从 #f3f5f0 微调更冷）
+  --fi-global-background-color: #f4f7f5;
 
-  // 文字颜色
-  --fi-global-font-color: #2e352f;
-  --fi-global-font-secondary-color: #5c6a60;
-  --fi-global-placeholder-color: #8a968c;
+  // 文字颜色：加深（从 #2e352f 到 #1f2a24）
+  --fi-global-font-color: #1f2a24;
+  --fi-global-font-secondary-color: #4f5e54;
+  --fi-global-placeholder-color: #889690;
 
-  // 主题强调色：灰绿（sage），低饱和、克制
-  --fi-primary: #3b7a57;
-  --fi-secondary: #5c6a60;
-  --fi-accent-rgb: 59, 122, 87;
-  --fi-global-link-hover-color: #2f6247;
-  --fi-menu-active-color: #2f6247;
-  --fi-single-link-color: #3b7a57;
-  --fi-single-link-hover-color: #2f6247;
+  // 主题强调色：深森林绿（从 #3b7a57 加深到 #2d6a4f，更正更存在）
+  --fi-primary: #2d6a4f;
+  --fi-secondary: #40916c;
+  --fi-accent-rgb: 45, 106, 79;
+  --fi-global-link-hover-color: #1b4332;
+  --fi-menu-active-color: #1b4332;
+  --fi-single-link-color: #2d6a4f;
+  --fi-single-link-hover-color: #1b4332;
 
   // 选中文字底色
-  --fi-selection-color: rgba(59, 122, 87, 0.22);
+  --fi-selection-color: rgba(45, 106, 79, 0.20);
 
   // 滚动条
-  --fi-scrollbar-color: #a3b5a6;
-  --fi-scrollbar-hover-color: #3b7a57;
+  --fi-scrollbar-color: #b5c4b8;
+  --fi-scrollbar-hover-color: #2d6a4f;
 
   // 顶栏背景
-  --fi-header-background-color: #e9efe8;
+  --fi-header-background-color: #e8f0ea;
 
   // 搜索框背景
-  --fi-search-background-color: #e2eae0;
+  --fi-search-background-color: #e0eae2;
 
   // 边框与圆角
-  --fi-global-border-color: #d3ddd0;
-  --fi-global-border-color-light: #e0e8dc;
-  --fi-global-border-color-weight: #b5c4b6;
+  --fi-global-border-color: #d4ddd5;
+  --fi-global-border-color-light: #e2eae3;
+  --fi-global-border-color-weight: #b0bfb3;
   --fi-global-border-radius: 12px;
 
   // 表格
-  --fi-table-background-color: #f0f4ec;
-  --fi-table-thead-color: #e2eae0;
+  --fi-table-background-color: #f0f5f1;
+  --fi-table-thead-color: #e0eae2;
 
   // 引用块
-  --fi-blockquote-color: #5a6b5e;
+  --fi-blockquote-color: #4a5e51;
 
   // 行内代码
-  --fi-code-inline-background-color: rgba(59, 122, 87, 0.09);
-  --fi-code-color: #3f5a47;
+  --fi-code-inline-background-color: rgba(45, 106, 79, 0.08);
+  --fi-code-color: #1b4332;
 
   // 代码块
-  --fi-code-block-background-color: #e9efe7;
-  --fi-code-header-background-color: #dde7da;
-  --fi-code-header-color: #455a49;
+  --fi-code-block-background-color: #eaf1ec;
+  --fi-code-header-background-color: #dde7df;
+  --fi-code-header-color: #3a4e42;
 }
 
 [data-scheme=sage][data-theme=dark] {
   // 页面整体背景：墨绿黑
-  --fi-global-background-color: #1a201b;
+  --fi-global-background-color: #161a17;
 
   // 文字颜色
-  --fi-global-font-color: #c2cec4;
-  --fi-global-font-secondary-color: #8a9c8e;
-  --fi-global-placeholder-color: #68796c;
-  --fi-global-link-color: #c2cec4;
+  --fi-global-font-color: #c8d4ca;
+  --fi-global-font-secondary-color: #88968e;
+  --fi-global-placeholder-color: #62756a;
+  --fi-global-link-color: #c8d4ca;
 
-  // 主题强调色：雾灰绿
-  --fi-primary: #8fbc9f;
-  --fi-secondary: #8a9c8e;
-  --fi-accent-rgb: 143, 188, 159;
-  --fi-global-link-hover-color: #a9d0b4;
-  --fi-menu-active-color: #a9d0b4;
-  --fi-single-link-color: #8fbc9f;
-  --fi-single-link-hover-color: #a9d0b4;
+  // 主题强调色：薄荷绿（从 #8fbc9f 提亮到 #7bc99a，暗色下更醒目）
+  --fi-primary: #7bc99a;
+  --fi-secondary: #6ab589;
+  --fi-accent-rgb: 123, 201, 154;
+  --fi-global-link-hover-color: #9adcb3;
+  --fi-menu-active-color: #9adcb3;
+  --fi-single-link-color: #7bc99a;
+  --fi-single-link-hover-color: #9adcb3;
 
   // 选中文字底色
-  --fi-selection-color: rgba(143, 188, 159, 0.3);
+  --fi-selection-color: rgba(123, 201, 154, 0.28);
 
   // 滚动条
-  --fi-scrollbar-color: #4d5c50;
-  --fi-scrollbar-hover-color: #8fbc9f;
+  --fi-scrollbar-color: #3a463d;
+  --fi-scrollbar-hover-color: #7bc99a;
 
   // 顶栏背景
-  --fi-header-background-color: #222a24;
+  --fi-header-background-color: #1d231f;
 
   // 搜索框背景
-  --fi-search-background-color: #27332a;
+  --fi-search-background-color: #222a25;
 
   // 边框
-  --fi-global-border-color: #33403a;
-  --fi-global-border-color-light: #2a342e;
-  --fi-global-border-color-weight: #425048;
+  --fi-global-border-color: #2c352f;
+  --fi-global-border-color-light: #232b26;
+  --fi-global-border-color-weight: #3b4540;
   --fi-global-border-radius: 12px;
 
   // 表格
-  --fi-table-background-color: #212b24;
-  --fi-table-thead-color: #1c261f;
+  --fi-table-background-color: #1b221d;
+  --fi-table-thead-color: #161a17;
 
   // 引用块
   --fi-blockquote-color: #8fa093;
 
   // 行内代码
-  --fi-code-inline-background-color: rgba(143, 188, 159, 0.16);
-  --fi-code-color: #a9d0b4;
+  --fi-code-inline-background-color: rgba(123, 201, 154, 0.16);
+  --fi-code-color: #9adcb3;
 
   // 代码块
-  --fi-code-block-background-color: #161d18;
-  --fi-code-header-background-color: #1d2620;
-  --fi-code-header-color: #8a9c8e;
+  --fi-code-block-background-color: #121613;
+  --fi-code-header-background-color: #1a201c;
+  --fi-code-header-color: #88968e;
 }
 
-// ==================== 配色方案三：FixIt 原生蓝 ====================
+// ==================== 配色方案三：原生蓝 Blue ====================
+// 精修：从 FixIt 默认蓝改为 GitHub 蓝（更正、更现代），底色微冷
 [data-scheme=blue] {
-  // 页面整体背景：纯白
-  --fi-global-background-color: #fff;
+  // 页面整体背景：微冷白（从纯白改为带一丝蓝灰）
+  --fi-global-background-color: #f8fafc;
 
-  // 文字颜色
-  --fi-global-font-color: #161209;
-  --fi-global-font-secondary-color: #5f5f5f;
-  --fi-global-placeholder-color: #999;
+  // 文字颜色：近纯黑（从 #161209 改为 #0d1117，GitHub 风格）
+  --fi-global-font-color: #1f2328;
+  --fi-global-font-secondary-color: #59636e;
+  --fi-global-placeholder-color: #8c959f;
 
-  // 主题强调色：FixIt 原生蓝
-  --fi-primary: #1677ff;
-  --fi-secondary: #6aa1f0;
-  --fi-accent-rgb: 22, 119, 255;
-  --fi-global-link-hover-color: #0958d9;
-  --fi-menu-active-color: #1677ff;
-  --fi-single-link-color: #1677ff;
-  --fi-single-link-hover-color: #0958d9;
+  // 主题强调色：GitHub 蓝（从 #1677ff 改为 #0969da，更沉稳）
+  --fi-primary: #0969da;
+  --fi-secondary: #218bff;
+  --fi-accent-rgb: 9, 105, 218;
+  --fi-global-link-hover-color: #0550ae;
+  --fi-menu-active-color: #0550ae;
+  --fi-single-link-color: #0969da;
+  --fi-single-link-hover-color: #0550ae;
 
   // 选中文字底色
-  --fi-selection-color: rgba(53, 166, 247, 0.25);
+  --fi-selection-color: rgba(9, 105, 218, 0.18);
 
   // 滚动条
-  --fi-scrollbar-color: #a6a6a6;
-  --fi-scrollbar-hover-color: #7d7d7d;
+  --fi-scrollbar-color: #c4cdd4;
+  --fi-scrollbar-hover-color: #0969da;
 
   // 顶栏背景
-  --fi-header-background-color: #f8f8f8;
+  --fi-header-background-color: #f1f5f9;
 
   // 搜索框背景
-  --fi-search-background-color: #e9e9e9;
+  --fi-search-background-color: #e8edf3;
 
   // 边框与圆角
-  --fi-global-border-color: #e3e3e3;
-  --fi-global-border-color-light: #f0f0f0;
-  --fi-global-border-color-weight: #d6d6d6;
+  --fi-global-border-color: #dde2e8;
+  --fi-global-border-color-light: #e8edf2;
+  --fi-global-border-color-weight: #c4cdd4;
   --fi-global-border-radius: 12px;
 
   // 表格
-  --fi-table-background-color: #fff;
-  --fi-table-thead-color: #ededed;
+  --fi-table-background-color: #f4f7fa;
+  --fi-table-thead-color: #e8edf3;
 
   // 引用块
-  --fi-blockquote-color: #555;
+  --fi-blockquote-color: #57606a;
 
   // 行内代码
-  --fi-code-inline-background-color: rgba(22, 119, 255, 0.09);
-  --fi-code-color: #1677ff;
+  --fi-code-inline-background-color: rgba(9, 105, 218, 0.08);
+  --fi-code-color: #0550ae;
 
   // 代码块
-  --fi-code-block-background-color: #f6f8fa;
-  --fi-code-header-background-color: #eaeef2;
-  --fi-code-header-color: #57606a;
+  --fi-code-block-background-color: #f3f6fa;
+  --fi-code-header-background-color: #e6ecf2;
+  --fi-code-header-color: #4a5560;
 }
 
 [data-scheme=blue][data-theme=dark] {
-  // 页面整体背景：FixIt 原生暗灰
-  --fi-global-background-color: #292a2e;
+  // 页面整体背景：GitHub 暗色（从 #292a2e 改为 #0d1117）
+  --fi-global-background-color: #0d1117;
 
   // 文字颜色
-  --fi-global-font-color: #b1b1ba;
-  --fi-global-font-secondary-color: #8f9ba8;
-  --fi-global-placeholder-color: #6c7680;
-  --fi-global-link-color: #b1b1ba;
+  --fi-global-font-color: #e6edf3;
+  --fi-global-font-secondary-color: #8b949e;
+  --fi-global-placeholder-color: #6e7681;
+  --fi-global-link-color: #e6edf3;
 
-  // 主题强调色：原生亮蓝
-  --fi-primary: #0069fc;
-  --fi-secondary: #4a8fe0;
-  --fi-accent-rgb: 0, 105, 252;
-  --fi-global-link-hover-color: #4a9eff;
-  --fi-menu-active-color: #4a9eff;
-  --fi-single-link-color: #0069fc;
-  --fi-single-link-hover-color: #4a9eff;
+  // 主题强调色：亮蓝（从 #0069fc 改为 #58a6ff，GitHub 暗色蓝）
+  --fi-primary: #58a6ff;
+  --fi-secondary: #79b8ff;
+  --fi-accent-rgb: 88, 166, 255;
+  --fi-global-link-hover-color: #79c0ff;
+  --fi-menu-active-color: #79c0ff;
+  --fi-single-link-color: #58a6ff;
+  --fi-single-link-hover-color: #79c0ff;
 
   // 选中文字底色
-  --fi-selection-color: rgba(50, 112, 194, 0.4);
+  --fi-selection-color: rgba(88, 166, 255, 0.28);
 
   // 滚动条
-  --fi-scrollbar-color: #a6a6a6;
-  --fi-scrollbar-hover-color: #7d7d7d;
+  --fi-scrollbar-color: #30363d;
+  --fi-scrollbar-hover-color: #58a6ff;
 
   // 顶栏背景
-  --fi-header-background-color: #252627;
+  --fi-header-background-color: #161b22;
 
   // 搜索框背景
-  --fi-search-background-color: #363636;
+  --fi-search-background-color: #1c2128;
 
   // 边框
-  --fi-global-border-color: #454545;
-  --fi-global-border-color-light: #383838;
-  --fi-global-border-color-weight: #525252;
+  --fi-global-border-color: #30363d;
+  --fi-global-border-color-light: #21262d;
+  --fi-global-border-color-weight: #424a53;
   --fi-global-border-radius: 12px;
 
   // 表格
-  --fi-table-background-color: #292a2e;
-  --fi-table-thead-color: #303136;
+  --fi-table-background-color: #161b22;
+  --fi-table-thead-color: #0d1117;
 
   // 引用块
-  --fi-blockquote-color: #8f9ba8;
+  --fi-blockquote-color: #8b949e;
 
   // 行内代码
-  --fi-code-inline-background-color: rgba(0, 105, 252, 0.15);
-  --fi-code-color: #4a9eff;
+  --fi-code-inline-background-color: rgba(88, 166, 255, 0.15);
+  --fi-code-color: #79c0ff;
 
   // 代码块
-  --fi-code-block-background-color: #232428;
-  --fi-code-header-background-color: #1c1d1f;
-  --fi-code-header-color: #8f9ba8;
+  --fi-code-block-background-color: #161b22;
+  --fi-code-header-background-color: #1c2128;
+  --fi-code-header-color: #8b949e;
+}
+
+// ==================== 配色方案四：石墨 Graphite ====================
+// 最接近 Apple 官网风格：近白冷灰底 + 近黑文字 + 石墨灰中性色 + Apple 蓝强调
+[data-scheme=graphite] {
+  // 页面整体背景：Apple 经典冷灰白
+  --fi-global-background-color: #fbfbfd;
+
+  // 文字颜色：Apple 近黑
+  --fi-global-font-color: #1d1d1f;
+  --fi-global-font-secondary-color: #6e6e73;
+  --fi-global-placeholder-color: #a1a1a6;
+
+  // 主题强调色：石墨灰（中性），链接用 Apple 蓝
+  --fi-primary: #6e6e73;
+  --fi-secondary: #86868b;
+  --fi-accent-rgb: 110, 110, 115;
+  --fi-global-link-color: #0071e3;
+  --fi-global-link-hover-color: #0077ed;
+  --fi-menu-active-color: #0071e3;
+  --fi-single-link-color: #0071e3;
+  --fi-single-link-hover-color: #0077ed;
+
+  // 选中文字底色
+  --fi-selection-color: rgba(0, 113, 227, 0.16);
+
+  // 滚动条
+  --fi-scrollbar-color: #c7c7cc;
+  --fi-scrollbar-hover-color: #86868b;
+
+  // 顶栏背景
+  --fi-header-background-color: #f5f5f7;
+
+  // 搜索框背景
+  --fi-search-background-color: #e8e8ed;
+
+  // 边框与圆角
+  --fi-global-border-color: #d2d2d7;
+  --fi-global-border-color-light: #e3e3e8;
+  --fi-global-border-color-weight: #b0b0b5;
+  --fi-global-border-radius: 12px;
+
+  // 表格
+  --fi-table-background-color: #f5f5f7;
+  --fi-table-thead-color: #e8e8ed;
+
+  // 引用块
+  --fi-blockquote-color: #6e6e73;
+
+  // 行内代码
+  --fi-code-inline-background-color: rgba(110, 110, 115, 0.08);
+  --fi-code-color: #1d1d1f;
+
+  // 代码块
+  --fi-code-block-background-color: #f5f5f7;
+  --fi-code-header-background-color: #e8e8ed;
+  --fi-code-header-color: #6e6e73;
+}
+
+[data-scheme=graphite][data-theme=dark] {
+  // 页面整体背景：Apple 暗色近黑
+  --fi-global-background-color: #1d1d1f;
+
+  // 文字颜色
+  --fi-global-font-color: #f5f5f7;
+  --fi-global-font-secondary-color: #86868b;
+  --fi-global-placeholder-color: #6e6e73;
+  --fi-global-link-color: #2997ff;
+
+  // 主题强调色：石墨灰（暗色提亮），链接用 Apple 暗色蓝
+  --fi-primary: #86868b;
+  --fi-secondary: #aeaeb2;
+  --fi-accent-rgb: 134, 134, 139;
+  --fi-global-link-hover-color: #64b4ff;
+  --fi-menu-active-color: #2997ff;
+  --fi-single-link-color: #2997ff;
+  --fi-single-link-hover-color: #64b4ff;
+
+  // 选中文字底色
+  --fi-selection-color: rgba(41, 151, 255, 0.28);
+
+  // 滚动条
+  --fi-scrollbar-color: #3a3a3c;
+  --fi-scrollbar-hover-color: #86868b;
+
+  // 顶栏背景
+  --fi-header-background-color: #2c2c2e;
+
+  // 搜索框背景
+  --fi-search-background-color: #3a3a3c;
+
+  // 边框
+  --fi-global-border-color: #3a3a3c;
+  --fi-global-border-color-light: #2c2c2e;
+  --fi-global-border-color-weight: #48484a;
+  --fi-global-border-radius: 12px;
+
+  // 表格
+  --fi-table-background-color: #2c2c2e;
+  --fi-table-thead-color: #1d1d1f;
+
+  // 引用块
+  --fi-blockquote-color: #86868b;
+
+  // 行内代码
+  --fi-code-inline-background-color: rgba(134, 134, 139, 0.16);
+  --fi-code-color: #f5f5f7;
+
+  // 代码块
+  --fi-code-block-background-color: #161617;
+  --fi-code-header-background-color: #2c2c2e;
+  --fi-code-header-color: #86868b;
+}
+
+// ==================== 配色方案五：靛蓝 Indigo ====================
+// Linear / Vercel 风格的现代感配色：极净底色 + 靛紫强调
+[data-scheme=indigo] {
+  // 页面整体背景：极净冷白
+  --fi-global-background-color: #fcfcfd;
+
+  // 文字颜色：Zinc 近黑
+  --fi-global-font-color: #18181b;
+  --fi-global-font-secondary-color: #52525b;
+  --fi-global-placeholder-color: #a1a1aa;
+
+  // 主题强调色：靛蓝（Linear 紫）
+  --fi-primary: #5e6ad2;
+  --fi-secondary: #7c89f0;
+  --fi-accent-rgb: 94, 106, 210;
+  --fi-global-link-hover-color: #4750b8;
+  --fi-menu-active-color: #4750b8;
+  --fi-single-link-color: #5e6ad2;
+  --fi-single-link-hover-color: #4750b8;
+
+  // 选中文字底色
+  --fi-selection-color: rgba(94, 106, 210, 0.18);
+
+  // 滚动条
+  --fi-scrollbar-color: #c4c4cc;
+  --fi-scrollbar-hover-color: #5e6ad2;
+
+  // 顶栏背景
+  --fi-header-background-color: #f4f4f7;
+
+  // 搜索框背景
+  --fi-search-background-color: #ebebf0;
+
+  // 边框与圆角
+  --fi-global-border-color: #e4e4e7;
+  --fi-global-border-color-light: #f0f0f3;
+  --fi-global-border-color-weight: #c8c8d0;
+  --fi-global-border-radius: 12px;
+
+  // 表格
+  --fi-table-background-color: #f4f4f7;
+  --fi-table-thead-color: #ebebf0;
+
+  // 引用块
+  --fi-blockquote-color: #52525b;
+
+  // 行内代码
+  --fi-code-inline-background-color: rgba(94, 106, 210, 0.08);
+  --fi-code-color: #4750b8;
+
+  // 代码块
+  --fi-code-block-background-color: #f4f4f7;
+  --fi-code-header-background-color: #e8e8ee;
+  --fi-code-header-color: #52525b;
+}
+
+[data-scheme=indigo][data-theme=dark] {
+  // 页面整体背景：Zinc 暗色
+  --fi-global-background-color: #18181b;
+
+  // 文字颜色
+  --fi-global-font-color: #e4e4e7;
+  --fi-global-font-secondary-color: #a1a1aa;
+  --fi-global-placeholder-color: #71717a;
+  --fi-global-link-color: #e4e4e7;
+
+  // 主题强调色：亮靛蓝（暗色提亮）
+  --fi-primary: #818cf8;
+  --fi-secondary: #a5b4fc;
+  --fi-accent-rgb: 129, 140, 248;
+  --fi-global-link-hover-color: #a5b4fc;
+  --fi-menu-active-color: #a5b4fc;
+  --fi-single-link-color: #818cf8;
+  --fi-single-link-hover-color: #a5b4fc;
+
+  // 选中文字底色
+  --fi-selection-color: rgba(129, 140, 248, 0.28);
+
+  // 滚动条
+  --fi-scrollbar-color: #3f3f46;
+  --fi-scrollbar-hover-color: #818cf8;
+
+  // 顶栏背景
+  --fi-header-background-color: #27272a;
+
+  // 搜索框背景
+  --fi-search-background-color: #2d2d33;
+
+  // 边框
+  --fi-global-border-color: #3f3f46;
+  --fi-global-border-color-light: #27272a;
+  --fi-global-border-color-weight: #52525b;
+  --fi-global-border-radius: 12px;
+
+  // 表格
+  --fi-table-background-color: #27272a;
+  --fi-table-thead-color: #18181b;
+
+  // 引用块
+  --fi-blockquote-color: #a1a1aa;
+
+  // 行内代码
+  --fi-code-inline-background-color: rgba(129, 140, 248, 0.16);
+  --fi-code-color: #a5b4fc;
+
+  // 代码块
+  --fi-code-block-background-color: #1a1a1d;
+  --fi-code-header-background-color: #27272a;
+  --fi-code-header-color: #a1a1aa;
 }
 
 // ---------- 欢迎 Hero 区 ----------

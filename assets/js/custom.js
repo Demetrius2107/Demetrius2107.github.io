@@ -1,5 +1,5 @@
 /**
- * 配色方案切换器（秋月橙 / 灰绿 / FixIt 原生蓝）
+ * 配色方案切换器（秋月 / 灰绿 / 原生蓝 / 石墨 / 靛蓝）
  * 通过 <html data-scheme="..."> 驱动 assets/css/_custom.scss 中的 [data-scheme] 变量块，
  * 选择持久化到 localStorage（键名 scheme），与主题自带的亮暗切换（键名 theme）互不冲突。
  *
@@ -10,9 +10,11 @@
   'use strict';
 
   var SCHEMES = [
-    { id: 'autumn', label: '秋月橙', icon: 'fa-sun' },
+    { id: 'autumn', label: '秋月', icon: 'fa-sun' },
     { id: 'sage', label: '灰绿', icon: 'fa-leaf' },
-    { id: 'blue', label: '原生蓝', icon: 'fa-droplet' }
+    { id: 'blue', label: '原生蓝', icon: 'fa-droplet' },
+    { id: 'graphite', label: '石墨', icon: 'fa-moon' },
+    { id: 'indigo', label: '靛蓝', icon: 'fa-gem' }
   ];
   var STORAGE_KEY = 'scheme';
 
