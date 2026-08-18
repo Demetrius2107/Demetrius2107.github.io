@@ -15,6 +15,9 @@ enableRobotsTXT = true
   logo = "/images/logo.png"
   favicon = "/favicon.ico"
 
+  # 站点级默认分享图（Open Graph / Twitter Card），文章 featuredImage 会覆盖
+  images = ["/images/logo.png"]
+
   defaultTheme = "auto"
   enableDarkMode = true
   enableThemeChange = true
@@ -28,6 +31,29 @@ enableRobotsTXT = true
   contentOverflow = true
   summaryLength = 150
   paginate = 10
+
+# ====================== 站内搜索（fuse 本地索引） ======================
+[params.search]
+  enable = true
+  type = "fuse"
+  contentLength = 4000
+  placeholder = "搜索文章…"
+  maxResultLength = 10
+  snippetLength = 50
+  highlightTag = "em"
+  absoluteURL = false
+  anchorify = true
+
+[params.search.fuse]
+  isCaseSensitive = false
+  minMatchCharLength = 2
+  findAllMatches = false
+  location = 0
+  threshold = 0.3
+  distance = 100
+  ignoreLocation = false
+  useExtendedSearch = false
+  ignoreFieldNorm = false
 
 # ====================== 首页个人档案 ======================
 [params.home.profile]
@@ -126,3 +152,73 @@ enableRobotsTXT = true
     guessSyntax = true
     lineNos = true
     lineNumbersInTable = true
+
+# ====================== Front Matter：lastmod 自动取 git 修改时间 ======================
+[frontmatter]
+  lastmod = ['lastmod', ':git', 'date']
+
+# ====================== 相关文章匹配规则 ======================
+[related]
+  threshold = 80
+  includeNewer = true
+  toLower = false
+  [[related.indices]]
+    name = 'tags'
+    weight = 100
+  [[related.indices]]
+    name = 'categories'
+    weight = 80
+
+# ====================== 自定义 partial 注入 ======================
+# FOUC 修复：在 <head> 内联读取 localStorage 配色，避免首屏闪烁
+[params.customPartials]
+head = ["custom/fouc.html"]
+
+# ====================== 输出格式（显式开启 search 索引） ======================
+[outputs]
+home = ["html", "rss", "archives", "search"]
+section = ["html", "rss"]
+taxonomy = ["html"]
+term = ["html", "rss"]
+
+# ====================== 文章页功能增强 ======================
+[params.page]
+  pageStyle = "wide"
+
+  # 阅读时长、字数、访问统计
+  readingTime = true
+  wordCount = true
+
+  # 图片灯箱：点击图片放大查看
+  lightgallery = "force"
+
+  # 文章过期提醒（技术博客实用）
+  [params.page.outdatedArticleReminder]
+    enable = true
+    hint = 365  # 超过 365 天的文章显示"可能已过时"提示
+
+  # 相关文章推荐
+  [params.page.related]
+    enable = true
+    count = 5
+
+  # 评论系统：Giscus（基于 GitHub Discussions）
+  [params.page.comment]
+    enable = true
+    [params.page.comment.giscus]
+      enable = true
+      # ⚠️ 以下两项需你去 https://giscus.app 获取后替换
+      repo = "Demetrius2107/Demetrius2107.github.io"
+      repoId = ""          # TODO: 去 giscus.app 生成，填入 data-repo-id
+      category = "Announcements"
+      categoryId = ""      # TODO: 去 giscus.app 生成，填入 data-category-id
+      mapping = "pathname"
+      strict = "0"
+      term = ""
+      reactionsEnabled = "1"
+      emitMetadata = "0"
+      inputPosition = "bottom"
+      lang = "zh-CN"
+      lightTheme = "light"
+      darkTheme = "dark"
+      lazyLoad = true
