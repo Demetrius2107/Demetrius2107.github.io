@@ -1,0 +1,9 @@
+{{- /* 在 <head> 内联执行：尽早读取 localStorage 设置 data-scheme，避免配色首屏闪烁（FOUC） */ -}}
+<script>
+  (function () {
+    try {
+      var s = localStorage.getItem('scheme');
+      if (s) { document.documentElement.dataset.scheme = s; }
+    } catch (e) {}
+  })();
+</script>

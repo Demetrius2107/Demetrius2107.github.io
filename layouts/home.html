@@ -10,30 +10,74 @@
     {{- $pages = where .Site.RegularPages "Section" "posts" -}}
   {{- end -}}
 
+  {{- /* ============ 每日一句：按年内天数轮换 ============ */ -}}
+  {{- $verses := slice
+      (dict "text" "此行山高路远，我口袋只剩玫瑰一片。" "from" "《小尖尖》")
+      (dict "text" "秋江上一轮明月——愿代码与文字，都像它一样清朗。" "from" "")
+      (dict "text" "Stay hungry, stay foolish." "from" "Steve Jobs")
+      (dict "text" "君问归期未有期，巴山夜雨涨秋池。" "from" "李商隐《夜雨寄北》")
+      (dict "text" "热爱可抵岁月漫长。" "from" "")
+      (dict "text" "千里之行，始于足下。" "from" "《道德经》")
+      (dict "text" "路漫漫其修远兮，吾将上下而求索。" "from" "屈原《离骚》")
+      (dict "text" "纸上得来终觉浅，绝知此事要躬行。" "from" "陆游《冬夜读书示子聿》")
+      (dict "text" "山高路远，看世界，也找自己。" "from" "")
+      (dict "text" "且将新火试新茶，诗酒趁年华。" "from" "苏轼《望江南》")
+      (dict "text" "星光不问赶路人，时光不负有心人。" "from" "")
+      (dict "text" "心之所向，素履以往。" "from" "《易经》")
+  -}}
+  {{- $dayOfYear := partial "function/doy.html" (now) -}}
+  {{- $verse := index $verses (mod (sub $dayOfYear 1) (len $verses)) -}}
+
   <div class="page home">
-    {{- /* ============ 全屏欢迎层（点击进入后淡出） ============ */ -}}
-    <div class="welcome-screen" id="welcome-screen" aria-hidden="true">
+    {{- /* ============ 全屏欢迎层：仅首次访问显示，点击后 localStorage 记忆 ============ */ -}}
+    {{- /* noscript 兜底：JS 被禁用时 CSS 直接隐藏遮罩，保证站点可用 */ -}}
+    <noscript><style>.welcome-screen{display:none!important}</style></noscript>
+    <div class="welcome-screen" id="welcome-screen" aria-hidden="false">
       <div class="welcome-inner">
         <span class="welcome-eyebrow">Welcome to my blog</span>
         <h1 class="welcome-title">{{ .Site.Params.home.profile.title | default .Site.Title }}</h1>
         <p class="welcome-subtitle">{{ .Site.Params.description | default "Stay hungry, stay foolish" }}</p>
+        <blockquote class="welcome-verse">
+          <p>{{ $verse.text }}</p>
+          {{- with $verse.from -}}<cite>{{ . }}</cite>{{- end -}}
+        </blockquote>
         <button class="welcome-enter" id="welcome-enter" type="button">
           <i class="fa-solid fa-arrow-right-long"></i> 进入博客
         </button>
       </div>
     </div>
     <script>
-      // 欢迎层：点击进入后淡出，期间锁定滚动
+      // 欢迎层逻辑：已访问过的用户直接跳过，localStorage 记忆
       (function () {
         var screen = document.getElementById('welcome-screen');
         var enter = document.getElementById('welcome-enter');
         if (!screen || !enter) { return; }
+
+        var KEY = 'welcome-seen';
+        var seen = false;
+        try { seen = localStorage.getItem(KEY) === '1'; } catch (e) {}
+
+        if (seen) {
+          screen.remove();
+          return;
+        }
+
         document.body.classList.add('welcome-lock');
-        enter.addEventListener('click', function () {
+        screen.setAttribute('aria-hidden', 'false');
+
+        function dismiss() {
           screen.classList.add('welcome-hidden');
+          screen.setAttribute('aria-hidden', 'true');
           document.body.classList.remove('welcome-lock');
-          setTimeout(function () { screen.remove(); }, 800);
-        });
+          try { localStorage.setItem(KEY, '1'); } catch (e) {}
+          setTimeout(function () { screen.remove(); }, 700);
+        }
+
+        enter.addEventListener('click', dismiss);
+        // 兜底：5 秒后仍未交互则自动放行，避免用户卡在遮罩里
+        setTimeout(function () {
+          if (document.body.classList.contains('welcome-lock')) { dismiss(); }
+        }, 5000);
       })();
     </script>
 
@@ -42,9 +86,16 @@
       <span class="hero-eyebrow">Welcome to my blog</span>
       <h1 class="hero-title">Hi, I'm <em>{{ .Site.Params.home.profile.title | default .Site.Title }}</em></h1>
       <p class="hero-subtitle">{{ .Site.Params.description | default "Stay hungry, stay foolish" }}</p>
+
+      {{- /* 每日一句：Hero 区内嵌展示，回访用户也能看到 */ -}}
+      <blockquote class="hero-verse">
+        <p>{{ $verse.text }}</p>
+        {{- with $verse.from -}}<cite>{{ . }}</cite>{{- end -}}
+      </blockquote>
+
       <div class="hero-actions">
         <a class="hero-btn-primary" href="#timeline">
-          <i class="fa-solid fa-arrow-down-long"></i> 进入博客
+          <i class="fa-solid fa-arrow-down-long"></i> 浏览文章
         </a>
         <a class="hero-btn-ghost" href="/about/">关于我</a>
         {{- with .Site.Params.social.GitHub -}}
@@ -183,7 +234,7 @@
                       </div>
                       <h3 class="tl-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
                       {{- with .Summary -}}
-                        <p class="tl-summary">{{ . | plainify | truncate 120 }}</p>
+                        <p class="tl-summary">{{ . | plainify | truncate 150 }}</p>
                       {{- end -}}
                       {{- $tags := .GetTerms "tags" -}}
                       {{- if $tags -}}
