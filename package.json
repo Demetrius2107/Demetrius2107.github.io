@@ -8,8 +8,5 @@
     "build": "hugo --minify",
     "new-post": "bash new-post.sh",
     "publish": "bash publish.sh"
-  },
-  "dependencies": {
-    "decap-cms": "^3.11.0"
   }
 }

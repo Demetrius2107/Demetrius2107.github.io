@@ -19,6 +19,10 @@ node_modules/
 *.swo
 *~
 
+# Obsidian 本地配置（vault 根目录 = 仓库根目录，勿提交）
+.obsidian/
+.obsidianignore
+
 # 操作系统文件
 .DS_Store
 Thumbs.db
@@ -30,3 +34,13 @@ Thumbs.db
 # 敏感信息（CMS 登录 Token 等，禁止提交）
 CMS token.md
 *token*.md
+
+# Obsidian 本地写作模板（不进仓库）
+_templates/
+
+# npm（实际 CMS 走 CDN，无前端依赖）
+node_modules/
+package-lock.json
+
+# ZCode 工具生成的计划文件
+.zcode/
