@@ -1180,9 +1180,11 @@ code, pre, .highlight {
   text-align: center;
   margin: 1.5rem 0 0.5rem;
 
-  .about-avatar {
+  // 用 .single .content 前缀提高优先级，覆盖 FixIt 的 .single .content img 规则
+  img.about-avatar {
     width: 120px;
     height: 120px;
+    max-width: 120px;
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);

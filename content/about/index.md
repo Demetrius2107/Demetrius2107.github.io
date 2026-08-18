@@ -7,7 +7,7 @@ toc = false
 +++
 
 <div class="about-hero">
-  <img class="about-avatar" src="/images/logo.png" alt="Demetrius 的头像">
+  <img class="about-avatar" src="/images/logo.png?v=2" alt="Demetrius 的头像" width="120" height="120">
   <h2>你好，我是 Demetrius2107</h2>
 </div>
 
