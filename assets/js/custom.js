@@ -94,3 +94,42 @@
     update();
   });
 })();
+
+/**
+ * 滚动渐现（玻璃拟态文档：IntersectionObserver reveal）
+ * 渐进增强：.reveal 类由 JS 添加，禁用 JS 时元素直接可见，无闪烁风险。
+ */
+(function () {
+  'use strict';
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var reduced = window.matchMedia
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced || !('IntersectionObserver' in window)) { return; }
+
+    var targets = document.querySelectorAll(
+      '.timeline-item, .home-block, .sidebar-card, .skill-group'
+    );
+    if (!targets.length) { return; }
+
+    var pending = [];
+    targets.forEach(function (el) {
+      // 首屏内已可见的元素直接跳过，避免加载时闪烁
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.92) { return; }
+      el.classList.add('reveal');
+      pending.push(el);
+    });
+    if (!pending.length) { return; }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+
+    pending.forEach(function (el) { observer.observe(el); });
+  });
+})();

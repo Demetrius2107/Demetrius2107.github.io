@@ -1,8 +1,11 @@
 // ==========================================
-// Custom style — 五套配色方案
+// Custom style — 五套配色方案 × 玻璃拟态
 // 说明：覆盖 FixIt 主题的 CSS 变量（--fi-*），
 //       亮色在 :root / [data-scheme=...]，暗色在 [data-theme=dark]。
 //       本文件在 style.scss 中最后 import，优先级最高。
+//
+//       玻璃配方（五层叠加，参照玻璃拟态拆解文档）：
+//       半透明白底 + backdrop-filter blur/saturate + 细描边 + 顶部内高光 + 深远投影
 //
 //       五套配色（顶栏调色板按钮循环切换，localStorage 持久化）：
 //       1. 秋月 autumn — 净白底 + 焦橙（默认）
@@ -29,21 +32,48 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-// ---------- 阴影系统：Apple/ChatGPT 风格的弥散阴影 ----------
+// ---------- 阴影与玻璃系统：弥散阴影 + 玻璃拟态五层配方 ----------
 :root {
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
-  --shadow-card-hover: 0 2px 8px rgba(0, 0, 0, 0.06), 0 12px 40px rgba(0, 0, 0, 0.10);
+  // 弹簧缓动：全局动效节奏（参照 --framer-spring）
+  --spring: 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+
+  // 玻璃层：亮色走"白玻璃 + 发丝描边"（毛玻璃卡路线）
+  --glass-blur: 14px;
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-bg-strong: rgba(255, 255, 255, 0.78);
+  --glass-stroke: rgba(0, 0, 0, 0.055);
+  --glass-highlight: rgba(255, 255, 255, 0.85);
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.03), 0 18px 54px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 2px 8px rgba(0, 0, 0, 0.04), 0 34px 96px rgba(0, 0, 0, 0.11);
   --shadow-btn: 0 2px 8px rgba(0, 0, 0, 0.08);
   --shadow-header: 0 1px 0 rgba(0, 0, 0, 0.06);
-  --card-bg: #ffffff;
+  --card-bg: rgba(255, 255, 255, 0.58);
 }
 
 [data-theme="dark"] {
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.3);
-  --shadow-card-hover: 0 2px 8px rgba(0, 0, 0, 0.25), 0 12px 40px rgba(0, 0, 0, 0.4);
+  // 玻璃层：暗色走完整五层配方（近黑底上叠白 5% 才干净）
+  --glass-blur: 14px;
+  --glass-bg: rgba(255, 255, 255, 0.045);
+  --glass-bg-strong: rgba(255, 255, 255, 0.07);
+  --glass-stroke: rgba(255, 255, 255, 0.10);
+  --glass-highlight: rgba(255, 255, 255, 0.08);
+
+  --shadow-card: 0 18px 54px rgba(0, 0, 0, 0.28);
+  --shadow-card-hover: 0 34px 96px rgba(0, 0, 0, 0.38);
   --shadow-btn: 0 2px 8px rgba(0, 0, 0, 0.3);
   --shadow-header: 0 1px 0 rgba(255, 255, 255, 0.06);
-  --card-bg: rgba(255, 255, 255, 0.04);
+  --card-bg: rgba(255, 255, 255, 0.045);
+}
+
+// 玻璃卡统一 backdrop-filter：底色半透明后由模糊接管质感
+.home-profile,
+.sidebar-card,
+.timeline-card,
+.block-body,
+.skill-group {
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.15);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.15);
 }
 
 // ---------- 亮色模式：秋月（净白底 + 焦橙） ----------
@@ -605,10 +635,28 @@ html {
   --fi-code-header-color: #a1a1aa;
 }
 
-// ---------- 欢迎 Hero 区 ----------
+// ---------- 欢迎 Hero 区：中央光晕 + 玻璃标签 + 渐变大标题 ----------
 .home-hero {
+  position: relative;
+  z-index: 0;
   text-align: center;
   padding: 80px 32px 48px;
+
+  // 中央光晕：radial-gradient 直接画，主色从标题背后渗出
+  &::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -40px;
+    width: 680px;
+    max-width: 92vw;
+    height: 440px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at center, rgba(var(--fi-accent-rgb), 0.16), transparent 65%);
+    filter: blur(48px);
+    pointer-events: none;
+    z-index: -1;
+  }
 
   .hero-eyebrow {
     display: inline-block;
@@ -616,7 +664,10 @@ html {
     letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--fi-global-font-secondary-color);
-    background: var(--fi-global-border-color-light);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-stroke);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
     padding: 6px 18px;
     border-radius: 980px;
     margin-bottom: 20px;
@@ -627,11 +678,40 @@ html {
     font-size: 48px;
     font-weight: 700;
     letter-spacing: -1px;
-    color: var(--fi-global-font-color);
+    line-height: 1.18;
+    // 注意：不能加 text-wrap: balance —— Chromium 下它会破坏 background-clip: text 裁剪
+
+    // 纵向渐变文字：近黑 → 主色调和（background-clip: text）
+    background: linear-gradient(
+      180deg,
+      var(--fi-global-font-color) 24%,
+      color-mix(in srgb, var(--fi-global-font-color) 58%, var(--fi-primary)) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
 
     em {
       font-style: normal;
-      color: var(--fi-primary);
+      // 名字单独渐变：主色 → 深一度
+      background: linear-gradient(120deg, var(--fi-primary), var(--fi-global-link-hover-color));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  // 暗色：暖奶油渐变（注意：不能加 text-shadow —— Chromium 下它会禁用 background-clip: text；
+  // 必须用 background-image —— background 简写会把 background-clip 重置回 border-box）
+  [data-theme="dark"] & {
+    .hero-title {
+      background-image: linear-gradient(
+        180deg,
+        #fffdfa 8%,
+        #f4e8df 62%,
+        color-mix(in srgb, #e6e0d6 72%, var(--fi-primary)) 100%
+      );
     }
   }
 
@@ -645,6 +725,7 @@ html {
 
   .hero-actions {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 16px;
 
@@ -657,7 +738,13 @@ html {
       font-size: 15px;
       font-weight: 500;
       text-decoration: none;
-      transition: all 0.3s var(--fi-bezier, ease);
+      // 弹簧缓动：transform 走 spring，颜色走快速 ease
+      transition:
+        transform var(--spring),
+        background 0.24s ease,
+        border-color 0.24s ease,
+        color 0.24s ease,
+        box-shadow 0.24s ease;
     }
 
     .hero-btn-primary {
@@ -674,6 +761,9 @@ html {
     .hero-btn-ghost {
       border: 1px solid var(--fi-global-border-color);
       color: var(--fi-global-font-color);
+      background: var(--glass-bg);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
 
       &:hover {
         border-color: var(--fi-primary);
@@ -722,7 +812,7 @@ html {
     .home-profile {
       padding: 28px 24px;
       background: var(--card-bg);
-      border: none;
+      border: 1px solid var(--glass-stroke);
       border-radius: var(--fi-global-border-radius);
       box-shadow: var(--shadow-card);
       text-align: center;
@@ -753,16 +843,28 @@ html {
     .sidebar-card {
       padding: 20px 24px;
       background: var(--card-bg);
-      border: none;
+      border: 1px solid var(--glass-stroke);
       border-radius: var(--fi-global-border-radius);
       box-shadow: var(--shadow-card);
 
       .sidebar-card-title {
-        margin: 0 0 12px;
-        padding-bottom: 8px;
+        // 胶囊标签：前置圆点，替代虚线下划线
+        margin: 0 0 14px;
+        padding-bottom: 0;
         font-size: 15px;
         font-weight: 600;
-        border-bottom: 1px dashed var(--fi-global-border-color);
+        border-bottom: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        &::before {
+          content: "";
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background: var(--fi-primary);
+        }
       }
 
       // 站点统计
@@ -971,8 +1073,11 @@ html {
           letter-spacing: 1px;
 
           & > span:first-child {
-            background: transparent;
-            color: var(--fi-primary);
+            // 年份数字：主色 → 辅色 渐变文字
+            background: linear-gradient(120deg, var(--fi-primary), var(--fi-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             padding: 0;
             font-size: 24px;
           }
@@ -1019,14 +1124,14 @@ html {
           .timeline-card {
             padding: 20px 24px;
             background: var(--card-bg);
-            border: none;
+            border: 1px solid var(--glass-stroke);
             border-radius: var(--fi-global-border-radius);
             box-shadow: var(--shadow-card);
-            transition: box-shadow 0.3s var(--fi-bezier, ease), transform 0.3s var(--fi-bezier, ease);
+            transition: box-shadow var(--spring), transform var(--spring);
 
             &:hover {
               box-shadow: var(--shadow-card-hover);
-              transform: translateY(-1px);
+              transform: translateY(-2px);
             }
 
             .tl-meta {
@@ -1125,7 +1230,7 @@ html {
       .block-body {
         padding: 24px 28px;
         background: var(--card-bg);
-        border: none;
+        border: 1px solid var(--glass-stroke);
         border-radius: var(--fi-global-border-radius);
         box-shadow: var(--shadow-card);
 
@@ -1169,7 +1274,7 @@ html {
       .skill-group {
         padding: 20px 22px;
         background: var(--card-bg);
-        border: none;
+        border: 1px solid var(--glass-stroke);
         border-radius: var(--fi-global-border-radius);
         box-shadow: var(--shadow-card);
 
@@ -1243,7 +1348,18 @@ html {
   }
 
   .welcome-inner {
-    padding: 24px;
+    // 玻璃面板：内容装进一块玻璃，渐变光球从背后透出
+    padding: 56px 64px;
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-stroke);
+    border-radius: 28px;
+    box-shadow: var(--shadow-card-hover), inset 0 1px 0 var(--glass-highlight);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    backdrop-filter: blur(20px) saturate(1.5);
+
+    @media (max-width: 640px) {
+      padding: 40px 24px;
+    }
 
     .welcome-eyebrow {
       display: inline-block;
@@ -1251,7 +1367,8 @@ html {
       letter-spacing: 4px;
       text-transform: uppercase;
       color: var(--fi-global-font-secondary-color);
-      border: 1px solid var(--fi-global-border-color-weight);
+      border: 1px solid var(--glass-stroke);
+      background: var(--glass-bg);
       padding: 4px 18px;
       border-radius: 20px;
       margin-bottom: 24px;
@@ -1262,10 +1379,35 @@ html {
       font-size: 56px;
       font-weight: 700;
       letter-spacing: 4px;
-      color: var(--fi-global-font-color);
+      // 必须显式设置行高：body 的 line-height 以固定 px 继承（24px），
+      // 行框小于字号时 Chromium 的 background-clip: text 会整条泄漏成色带
+      line-height: 1.2;
+
+      // 与 Hero 同款渐变文字
+      background: linear-gradient(
+        180deg,
+        var(--fi-global-font-color) 24%,
+        color-mix(in srgb, var(--fi-global-font-color) 58%, var(--fi-primary)) 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
 
       @media (max-width: 640px) {
         font-size: 38px;
+      }
+    }
+
+    [data-theme="dark"] & {
+      .welcome-title {
+        // 必须用 background-image —— background 简写会把 background-clip 重置回 border-box
+        background-image: linear-gradient(
+          180deg,
+          #fffdfa 8%,
+          #f4e8df 62%,
+          color-mix(in srgb, #e6e0d6 72%, var(--fi-primary)) 100%
+        );
       }
     }
 
@@ -1288,7 +1430,10 @@ html {
       font-size: 15px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.3s var(--fi-bezier, ease);
+      transition:
+        transform var(--spring),
+        background 0.24s ease,
+        box-shadow 0.24s ease;
 
       &:hover {
         background: var(--fi-global-link-hover-color);
@@ -1304,11 +1449,12 @@ body.welcome-lock {
 }
 
 // ---------- 顶部横栏 UI 改造：Apple 风格毛玻璃 + 胶囊菜单 ----------
-#header-desktop .header-wrapper {
+#header-desktop .header-wrapper,
+#header-mobile .header-wrapper {
   // 毛玻璃背景：更低透明度 + 更强模糊 + 饱和度提升（Apple 标准参数）
   background: color-mix(in srgb, var(--fi-header-background-color) 60%, transparent);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  backdrop-filter: blur(18px) saturate(180%);
 }
 
 // 去掉菜单项之间的虚线竖线分隔符
@@ -1375,10 +1521,12 @@ code, pre, .highlight {
 .welcome-verse {
   margin: 0 auto 24px;
   max-width: 520px;
-  padding: 14px 22px;
-  border-left: 3px solid var(--fi-primary);
-  background: rgba(var(--fi-accent-rgb), 0.06);
-  border-radius: 0 var(--fi-global-border-radius) var(--fi-global-border-radius) 0;
+  padding: 16px 24px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-stroke);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  backdrop-filter: blur(12px) saturate(1.2);
+  border-radius: var(--fi-global-border-radius);
   text-align: left;
 
   p {
@@ -1453,4 +1601,43 @@ code, pre, .highlight {
   background: var(--fi-primary);
   transition: width 0.1s ease;
   box-shadow: 0 0 4px rgba(var(--fi-accent-rgb), 0.5);
+}
+
+// ---------- 滚动渐现：渐进增强（.reveal 由 JS 添加，noscript 下完全可见） ----------
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--spring), transform var(--spring);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: none;
+}
+
+// 锚点跳转平滑滚动（尊重减少动态偏好）
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+// 减少动态偏好：关闭渐现、光晕与全部过渡动画
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .home-hero::before {
+    display: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }
